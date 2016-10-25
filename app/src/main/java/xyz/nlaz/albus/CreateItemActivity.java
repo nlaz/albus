@@ -34,8 +34,8 @@ public class CreateItemActivity extends AppCompatActivity {
                 return;
             } else {
                 Intent i = new Intent();
-                i.putExtra("title", titleInput.getText());
-                i.putExtra("description", titleInput.getText());
+                i.putExtra("title", titleInput.getText().toString());
+                i.putExtra("description", descriptionInput.getText().toString());
                 setResult(Activity.RESULT_OK, i);
                 finish();
             }

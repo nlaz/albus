@@ -22,7 +22,7 @@ import java.util.List;
 public class MainActivity extends AppCompatActivity {
 
     private ListView listView;
-    private ArrayList<String> data;
+    private ArrayList<Moment> objects;
     private ViewAdapter adapter;
 
     @Override
@@ -31,14 +31,10 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
 
         listView = (ListView) findViewById(R.id.listview);
-        data = new ArrayList<String>();
-        adapter = new ViewAdapter(this, R.layout.list_item, data);
+        objects = new ArrayList<Moment>();
+        adapter = new ViewAdapter(this, R.layout.list_item, objects);
 
         listView.setAdapter(adapter);
-
-        for(int i = 0; i < 10; i++) {
-            data.add("Test " + i);
-        }
     }
 
     @Override
@@ -56,8 +52,6 @@ public class MainActivity extends AppCompatActivity {
                 Intent intent = new Intent(this, CreateItemActivity.class);
                 startActivityForResult(intent, 1);
                 break;
-            default:
-                break;
         }
         return true;
     }
@@ -69,19 +63,23 @@ public class MainActivity extends AppCompatActivity {
             if (resultCode == Activity.RESULT_OK) {
                 String newTitle = data.getStringExtra("title");
                 String newDescription = data.getStringExtra("description");
+                Moment newMoment = new Moment(newTitle, newDescription);
+                Toast.makeText(this, newTitle + ": " + newDescription, Toast.LENGTH_SHORT).show();
+                objects.add(newMoment);
+                adapter.notifyDataSetChanged();
             } else {
-                Toast.makeText(this, "Oops something bad happened!", Toast.LENGTH_SHORT);
+                Toast.makeText(this, "Oops something bad happened!", Toast.LENGTH_SHORT).show();
             }
         }
     }
 
-    private class ViewAdapter extends ArrayAdapter<String> {
+    private class ViewAdapter extends ArrayAdapter<Moment> {
 
         private Context context;
         private int resource;
-        private List<String> objects;
+        private List<Moment> objects;
 
-        public ViewAdapter(Context context, int resource, ArrayList<String> objects) {
+        public ViewAdapter(Context context, int resource, ArrayList<Moment> objects) {
             super(context, resource, objects);
 
             this.context = context;
@@ -94,7 +92,7 @@ public class MainActivity extends AppCompatActivity {
             LayoutInflater inflater = LayoutInflater.from(context);
             View view = inflater.inflate(resource, parent, false);
             TextView title = (TextView) view.findViewById(R.id.title);
-            title.setText(this.objects.get(position));
+            title.setText(this.objects.get(position).getTitle());
             return view;
         }
     }
