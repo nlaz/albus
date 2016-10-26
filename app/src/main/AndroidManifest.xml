@@ -15,7 +15,8 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".CreateItemActivity"></activity>
+        <activity android:name=".CreateItemActivity" />
+        <activity android:name=".ReviewActivity"></activity>
     </application>
 
 </manifest>

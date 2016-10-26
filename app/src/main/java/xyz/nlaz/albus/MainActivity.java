@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
 import android.view.LayoutInflater;
 import android.view.Menu;
@@ -49,8 +50,14 @@ public class MainActivity extends AppCompatActivity {
         switch(item.getItemId()) {
             case R.id.add_button:
                 Toast.makeText(this, "Add selected", Toast.LENGTH_SHORT).show();
-                Intent intent = new Intent(this, CreateItemActivity.class);
-                startActivityForResult(intent, 1);
+                Intent addIntent = new Intent(this, CreateItemActivity.class);
+                startActivityForResult(addIntent, 1);
+                break;
+            case R.id.review_button:
+                Toast.makeText(this, "Review selected", Toast.LENGTH_SHORT).show();
+                Intent reviewIntent = new Intent(this, ReviewActivity.class);
+                reviewIntent.putParcelableArrayListExtra("moments", objects);
+                startActivity(reviewIntent);
                 break;
         }
         return true;
@@ -79,7 +86,7 @@ public class MainActivity extends AppCompatActivity {
         private int resource;
         private List<Moment> objects;
 
-        public ViewAdapter(Context context, int resource, ArrayList<Moment> objects) {
+        ViewAdapter(Context context, int resource, ArrayList<Moment> objects) {
             super(context, resource, objects);
 
             this.context = context;
@@ -87,6 +94,7 @@ public class MainActivity extends AppCompatActivity {
             this.objects = objects;
         }
 
+        @NonNull
         @Override
         public View getView(int position, View convertView, ViewGroup parent) {
             LayoutInflater inflater = LayoutInflater.from(context);

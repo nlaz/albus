@@ -1,10 +1,15 @@
 <?xml version="1.0" encoding="utf-8"?>
 <menu xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto">
-R
+
     <item
         android:id="@+id/add_button"
         app:showAsAction="always"
         android:icon="@android:drawable/ic_menu_add"
         android:title="Add" />
+    <item
+        android:id="@+id/review_button"
+        app:showAsAction="ifRoom"
+        android:icon="@android:drawable/ic_media_play"
+        android:title="Review"/>
 </menu>
