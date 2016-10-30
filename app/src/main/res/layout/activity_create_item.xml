@@ -7,24 +7,48 @@
     android:padding="20dp"
     tools:context="xyz.nlaz.albus.CreateItemActivity">
 
-    <EditText
-        android:id="@+id/title"
+    <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:hint="Create Item"/>
+        android:layout_height="match_parent"
+        android:orientation="vertical">
 
-    <EditText
-        android:id="@+id/description"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/title"
-        android:hint="Add Description"/>
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="NAME"
+            android:textColor="@color/colorPrimaryBlue"
+            android:textStyle="bold"/>
 
-    <Button
-        android:id="@+id/button"
-        android:text="Save"
-        android:layout_alignParentBottom="true"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content" />
+        <EditText
+            android:id="@+id/title"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="10dp"
+            android:hint="Create moment..."/>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="NOTES"
+            android:textColor="@color/colorPrimaryBlue"
+            android:textStyle="bold"/>
+
+        <EditText
+            android:id="@+id/description"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="10dp"
+            android:hint="Add some notes to jog your memory..."/>
+
+    </LinearLayout>
+
+<Button
+    android:id="@+id/button"
+    android:text="Save Moment"
+    android:background="@color/colorPrimaryBlue"
+    android:textColor="@android:color/white"
+    android:layout_alignParentBottom="true"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content" />
 
 </RelativeLayout>

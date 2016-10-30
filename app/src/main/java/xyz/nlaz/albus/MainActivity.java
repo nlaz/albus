@@ -25,6 +25,7 @@ public class MainActivity extends AppCompatActivity {
     private ListView listView;
     private ArrayList<Moment> objects;
     private ViewAdapter adapter;
+    private TextView emptyView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -32,9 +33,12 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
 
         listView = (ListView) findViewById(R.id.listview);
-        objects = new ArrayList<Moment>();
-        adapter = new ViewAdapter(this, R.layout.list_item, objects);
+        emptyView = (TextView) findViewById(R.id.emptyView);
 
+        objects = new ArrayList<Moment>();
+        listView.setEmptyView(emptyView);
+
+        adapter = new ViewAdapter(this, R.layout.list_item, objects);
         listView.setAdapter(adapter);
     }
 

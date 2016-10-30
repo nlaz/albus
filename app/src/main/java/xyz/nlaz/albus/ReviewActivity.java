@@ -32,6 +32,9 @@ public class ReviewActivity extends AppCompatActivity {
 
     void renderCard() {
         Moment item = objects.remove(0);
+        if (objects.isEmpty()) {
+            nextButton.setText("FINISH");
+        }
         titleView.setText(item.getTitle());
     }
 

@@ -8,7 +8,18 @@
 
     <ListView
         android:id="@+id/listview"
+        android:background="@color/colorLightGray"
+        android:dividerHeight="0dp"
+        android:divider="@null"
         android:layout_width="match_parent"
         android:layout_height="match_parent" />
+
+    <TextView
+        android:id="@+id/emptyView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerInParent="true"
+        android:textSize="18sp"
+        android:text="No moments made"/>
 
 </RelativeLayout>

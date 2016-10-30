@@ -8,15 +8,14 @@
     android:paddingLeft="@dimen/activity_horizontal_margin"
     android:paddingRight="@dimen/activity_horizontal_margin"
     android:paddingTop="@dimen/activity_vertical_margin"
-    android:background="#ededed"
+    android:background="@color/colorLightGray"
     tools:context="xyz.nlaz.albus.ReviewActivity">
-
 
     <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="150dp"
+        android:layout_height="250dp"
         android:layout_centerInParent="true"
-        android:translationZ="5dp"
+        android:translationZ="2dp"
         android:background="#ffffff">
 
         <TextView
@@ -24,15 +23,19 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:textAlignment="center"
+            android:textColor="@android:color/black"
             android:text="Placeholder"
-            android:textSize="18sp"
+            android:textSize="20sp"
             android:layout_centerInParent="true"/>
+
     </RelativeLayout>
 
     <Button
         android:id="@+id/next_button"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:background="@color/colorPrimaryBlue"
+        android:textColor="@android:color/white"
         android:text="Next"
         android:layout_alignParentBottom="true"/>
 
