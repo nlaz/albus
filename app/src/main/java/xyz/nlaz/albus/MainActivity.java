@@ -54,10 +54,14 @@ public class MainActivity extends AppCompatActivity {
                 startActivityForResult(addIntent, 1);
                 break;
             case R.id.review_button:
-                Toast.makeText(this, "Review selected", Toast.LENGTH_SHORT).show();
-                Intent reviewIntent = new Intent(this, ReviewActivity.class);
-                reviewIntent.putParcelableArrayListExtra("moments", objects);
-                startActivity(reviewIntent);
+                if (objects.size() > 0) {
+                    Toast.makeText(this, "Review selected", Toast.LENGTH_SHORT).show();
+                    Intent reviewIntent = new Intent(this, ReviewActivity.class);
+                    reviewIntent.putParcelableArrayListExtra("moments", objects);
+                    startActivity(reviewIntent);
+                } else {
+                    Toast.makeText(this, "No items available", Toast.LENGTH_SHORT).show();
+                }
                 break;
         }
         return true;
