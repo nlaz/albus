@@ -12,23 +12,70 @@
     tools:context="xyz.nlaz.albus.ReviewActivity">
 
     <RelativeLayout
+        android:id="@+id/item_card"
         android:layout_width="match_parent"
         android:layout_height="250dp"
         android:layout_centerInParent="true"
         android:translationZ="2dp"
         android:background="#ffffff">
 
-        <TextView
-            android:id="@+id/title"
-            android:layout_width="match_parent"
+        <LinearLayout
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:textAlignment="center"
-            android:textColor="@android:color/black"
-            android:text="Placeholder"
-            android:textSize="20sp"
-            android:layout_centerInParent="true"/>
+            android:layout_centerInParent="true"
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/item_title"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textAlignment="center"
+                android:textColor="@android:color/black"
+                android:text="Placeholder"
+                android:textSize="24sp"
+                android:layout_centerInParent="true"/>
+
+            <TextView
+                android:id="@+id/item_notes"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/title"
+                android:visibility="gone"
+                android:layout_marginTop="10dp"
+                android:layout_marginLeft="30dp"
+                android:layout_marginRight="30dp"
+                android:textAlignment="center"
+                android:textSize="18sp"
+                android:text="Taxidermy vice activated charcoal authentic beard craft beer. Cardigan af meh iceland biodiesel"/>
+        </LinearLayout>
 
     </RelativeLayout>
+
+    <LinearLayout
+        android:id="@+id/report_view"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:visibility="gone"
+        android:orientation="vertical">
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="NICE JOB!"
+            android:textSize="20sp"
+            android:textColor="@color/colorPrimaryBlue"
+            android:textStyle="bold"/>
+
+        <TextView
+            android:id="@+id/report_text"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textColor="@android:color/black"
+            android:text="Taxidermy vice activated charcoal authentic beard craft beer. Cardigan af meh iceland biodiesel"
+            android:layout_marginTop="20dp"
+            android:textSize="18sp"/>
+
+    </LinearLayout>
 
     <Button
         android:id="@+id/next_button"

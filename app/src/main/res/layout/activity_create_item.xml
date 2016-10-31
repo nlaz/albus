@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:padding="20dp"
-    tools:context="xyz.nlaz.albus.CreateItemActivity">
+    tools:context="xyz.nlaz.albus.CreateMomentActivity">
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -25,7 +25,7 @@
             android:layout_height="wrap_content"
             android:layout_margin="10dp"
             android:hint="Create moment..."/>
-
+        
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"

@@ -9,7 +9,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
-public class CreateItemActivity extends AppCompatActivity {
+public class CreateMomentActivity extends AppCompatActivity {
 
     private EditText titleInput;
     private EditText descriptionInput;

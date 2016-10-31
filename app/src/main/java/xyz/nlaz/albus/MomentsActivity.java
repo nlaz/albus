@@ -20,7 +20,7 @@ import android.widget.Toast;
 import java.util.ArrayList;
 import java.util.List;
 
-public class MainActivity extends AppCompatActivity {
+public class MomentsActivity extends AppCompatActivity {
 
     private ListView listView;
     private ArrayList<Moment> objects;
@@ -54,7 +54,7 @@ public class MainActivity extends AppCompatActivity {
         switch(item.getItemId()) {
             case R.id.add_button:
                 Toast.makeText(this, "Add selected", Toast.LENGTH_SHORT).show();
-                Intent addIntent = new Intent(this, CreateItemActivity.class);
+                Intent addIntent = new Intent(this, CreateMomentActivity.class);
                 startActivityForResult(addIntent, 1);
                 break;
             case R.id.review_button:
