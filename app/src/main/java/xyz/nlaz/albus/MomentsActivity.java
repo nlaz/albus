@@ -26,6 +26,7 @@ public class MomentsActivity extends AppCompatActivity {
     private ArrayList<Moment> objects;
     private ViewAdapter adapter;
     private TextView emptyView;
+    private Collection collection;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -35,8 +36,11 @@ public class MomentsActivity extends AppCompatActivity {
         listView = (ListView) findViewById(R.id.listview);
         emptyView = (TextView) findViewById(R.id.emptyView);
 
-        objects = new ArrayList<Moment>();
         listView.setEmptyView(emptyView);
+        Bundle bundle = getIntent().getExtras();
+        collection = bundle.getParcelable("collection");
+
+        objects = collection.getMoments();
 
         adapter = new ViewAdapter(this, R.layout.list_item, objects);
         listView.setAdapter(adapter);

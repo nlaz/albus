@@ -30,10 +30,20 @@ public class CollectionsActivity extends AppCompatActivity {
         collections = new ArrayList<Collection>();
         gridView = (GridView) findViewById(R.id.grid_view);
 
+        Collection test = new Collection("Moments Test");
         collections.add(new Collection("Test 1"));
         collections.add(new Collection("Test 2"));
         collections.add(new Collection("Test 3"));
         collections.add(new Collection("Test 4"));
+
+        ArrayList<Moment> fakeData = new ArrayList<Moment>();
+        fakeData.add(new Moment("Just a Friend", "You say hes just a friend - Biz Markie"));
+        fakeData.add(new Moment("Can I Kick it?", "A tribe called quest"));
+        fakeData.add(new Moment("C.R.E.A.M", "Wu-Tang Clan"));
+
+        test.setMoments(fakeData);
+
+        collections.add(test);
 
         adapter = new GridAdapter(this, R.layout.collection_item, collections);
         gridView.setAdapter(adapter);
