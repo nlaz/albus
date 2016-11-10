@@ -34,13 +34,29 @@ public class SQLiteHelper extends SQLiteOpenHelper{
         onCreate(db);
     }
 
-    public boolean insertMoment(Moment moment) {
+    public Integer insertMoment(Moment moment) {
         SQLiteDatabase db = this.getWritableDatabase();
         ContentValues values = new ContentValues();
         values.put(MomentEntity.COLUMN_TITLE, moment.getTitle());
         values.put(MomentEntity.COLUMN_DESCRIPTION, moment.getDescription());
-        long newRowId = db.insert(MomentEntity.TABLE_NAME, null, values);
+        long rowid = db.insert(MomentEntity.TABLE_NAME, null, values);
+        Cursor c = db.rawQuery("SELECT * from " + MomentEntity.TABLE_NAME + " WHERE rowid = "  + rowid, null);
+        c.moveToFirst();
+        return c.getInt(c.getColumnIndex(MomentEntity._ID));
+    }
+
+    public boolean updateMoment(Integer id, Moment moment) {
+        SQLiteDatabase db = this.getWritableDatabase();
+        ContentValues values = new ContentValues();
+        values.put(MomentEntity.COLUMN_TITLE, moment.getTitle());
+        values.put(MomentEntity.COLUMN_DESCRIPTION, moment.getDescription());
+        db.update(MomentEntity.TABLE_NAME, values, MomentEntity._ID + " = ? ", new String[] { Integer.toString(id) });
         return true;
+    }
+
+    public Integer deleteMomentById(Integer id) {
+        SQLiteDatabase db = this.getWritableDatabase();
+        return db.delete(MomentEntity.TABLE_NAME, MomentEntity._ID + " = ? ", new String[] { Integer.toString(id) });
     }
 
     public ArrayList<Moment> getAllMoments() {
@@ -51,10 +67,11 @@ public class SQLiteHelper extends SQLiteOpenHelper{
         c.moveToFirst();
 
         while(c.isAfterLast() == false) {
+            int id = c.getInt(c.getColumnIndex(MomentEntity._ID));
             String title = c.getString(c.getColumnIndex(MomentEntity.COLUMN_TITLE));
             String desc = c.getString(c.getColumnIndex(MomentEntity.COLUMN_DESCRIPTION));
 
-            list.add(new Moment(title, desc));
+            list.add(new Moment(id, title, desc));
             c.moveToNext();
         }
         return list;

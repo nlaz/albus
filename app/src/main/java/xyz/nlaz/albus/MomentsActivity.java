@@ -40,6 +40,11 @@ public class MomentsActivity extends AppCompatActivity {
     private DatabaseReference momentsRef;
     private SQLiteHelper dbHelper;
 
+    public static final int REQUEST_CODE_EDIT = 1;
+    public static final int REQUEST_CODE_NEW = 2;
+    public static final int RESULT_CODE_DELETE = 3;
+    public static final int RESULT_CODE_UPDATE = 4;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -85,7 +90,7 @@ public class MomentsActivity extends AppCompatActivity {
             case R.id.add_button:
                 Toast.makeText(this, "Add selected", Toast.LENGTH_SHORT).show();
                 Intent addIntent = new Intent(this, CreateMomentActivity.class);
-                startActivityForResult(addIntent, 1);
+                startActivityForResult(addIntent, REQUEST_CODE_NEW);
                 break;
             case R.id.review_button:
                 if (objects.size() > 0) {
@@ -104,22 +109,59 @@ public class MomentsActivity extends AppCompatActivity {
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-        if (requestCode == 1) {
-            if (resultCode == Activity.RESULT_OK) {
-                String newTitle = data.getStringExtra("title");
-                String newDescription = data.getStringExtra("description");
-                Moment newMoment = new Moment(newTitle, newDescription);
+        switch (requestCode) {
+            case REQUEST_CODE_NEW:
+                if (resultCode == Activity.RESULT_OK) {
+                    Moment newMoment = data.getParcelableExtra("moment");
+                    int id = dbHelper.insertMoment(newMoment);
+                    newMoment.setId(id);
+                    objects.add(newMoment);
+                    Toast.makeText(this, "New Item: " + newMoment.getId(), Toast.LENGTH_SHORT).show();
+                    adapter.notifyDataSetChanged();
+                }
+                break;
+            case REQUEST_CODE_EDIT:
+                if (resultCode == RESULT_CODE_UPDATE) {
+                    Toast.makeText(this, "Update Item", Toast.LENGTH_SHORT).show();
+                    Moment moment = data.getParcelableExtra("moment");
+                    dbHelper.updateMoment(moment.getId(), moment);
+                    updateMomentInList(moment);
+                } else if (resultCode == RESULT_CODE_DELETE) {
+                    Moment moment = data.getParcelableExtra("moment");
+                    Toast.makeText(this, "Delete Item: " + moment.getId(), Toast.LENGTH_SHORT).show();
+                    dbHelper.deleteMomentById(moment.getId());
+                    removeMomentInList(moment);
+                }
+                break;
+            default:
+                Toast.makeText(this, "I'm not sure what to do :(", Toast.LENGTH_SHORT).show();
+                break;
+        }
+    }
 
-                objects.add(newMoment);
-                dbHelper.insertMoment(newMoment);
+    /* Helper Methods */
+    private void updateMomentInList(Moment m) {
+        for (int i = 0; i < objects.size(); i++) {
+            if (objects.get(i).getId() == m.getId()) {
+                objects.set(i, m);
+                Toast.makeText(this, "UPDATE!", Toast.LENGTH_SHORT).show();
                 adapter.notifyDataSetChanged();
-
-            } else {
-                Toast.makeText(this, "Oops something bad happened!", Toast.LENGTH_SHORT).show();
+                return;
             }
         }
     }
 
+    private void removeMomentInList(Moment m) {
+        for (Moment moment: objects) {
+            if (moment.getId() == m.getId()) {
+                objects.remove(moment);
+                adapter.notifyDataSetChanged();
+                return;
+            }
+        }
+    }
+
+    /* Array Adapter */
     private class ViewAdapter extends ArrayAdapter<Moment> {
 
         private Context context;
@@ -141,26 +183,24 @@ public class MomentsActivity extends AppCompatActivity {
             View view = inflater.inflate(resource, parent, false);
             TextView title = (TextView) view.findViewById(R.id.title);
             title.setText(this.objects.get(position).getTitle());
-
-            view.setOnLongClickListener(new View.OnLongClickListener() {
-                @Override
-                public boolean onLongClick(View v) {
-                    Intent intent = new Intent(MomentsActivity.this, CreateMomentActivity.class);
-                    intent.putExtra()
-                }
-            });
+            view.setOnLongClickListener( getLongClickListener(position) );
             return view;
         }
     }
 
     /* Event Listener */
-    private View.OnLongClickListener longClickListener = new View.OnLongClickListener() {
-        @Override
-        public boolean onLongClick(View v) {
+    private View.OnLongClickListener getLongClickListener(final int position) {
+       return new View.OnLongClickListener() {
 
-            return false;
-        }
-    };
+           @Override
+           public boolean onLongClick(View v) {
+               Intent intent = new Intent(MomentsActivity.this, CreateMomentActivity.class);
+               intent.putExtra("moment", objects.get(position));
+               startActivityForResult(intent, REQUEST_CODE_EDIT);
+               return false;
+           }
+       };
+    }
 
     /* DB Listener */
     ChildEventListener childListener = new ChildEventListener() {

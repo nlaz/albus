@@ -8,6 +8,7 @@ import android.os.Parcelable;
  */
 
 class Moment implements Parcelable {
+    private Integer id;
     private String title;
     private String description;
 
@@ -16,6 +17,12 @@ class Moment implements Parcelable {
     }
 
     Moment(String title, String description) {
+        this.title = title;
+        this.description = description;
+    }
+
+    Moment(Integer id, String title, String description) {
+        this.id = id;
         this.title = title;
         this.description = description;
     }
@@ -36,6 +43,14 @@ class Moment implements Parcelable {
         this.description = description;
     }
 
+    public Integer getId() {
+        return id;
+    }
+
+    public void setId(Integer id) {
+        this.id = id;
+    }
+
     @Override
     public int describeContents() {
         return 0;
@@ -43,11 +58,13 @@ class Moment implements Parcelable {
 
     @Override
     public void writeToParcel(Parcel dest, int flags) {
+        dest.writeSerializable(id);
         dest.writeString(title);
         dest.writeString(description);
     }
 
     private Moment(Parcel in) {
+        id = (Integer) in.readSerializable();
         title = in.readString();
         description = in.readString();
     }
