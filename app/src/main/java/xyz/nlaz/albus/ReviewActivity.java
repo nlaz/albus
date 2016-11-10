@@ -46,6 +46,7 @@ public class ReviewActivity extends AppCompatActivity {
     void renderCard() {
         Moment item = objects.remove(0);
         titleView.setText(item.getTitle());
+        reportText.setText(item.getDescription());
     }
 
     void toggleView(View v) {

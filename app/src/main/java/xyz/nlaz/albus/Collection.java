@@ -12,10 +12,16 @@ import java.util.ArrayList;
 public class Collection implements Parcelable{
 
    private String name;
-   private ArrayList moments;
+   private ArrayList<Moment> moments;
+
+    public Collection() {
+        //Default constructor required by Firebase
+        moments = new ArrayList<Moment>();
+    }
 
    Collection(String name) {
-      this.name = name;
+        this.name = name;
+        this.moments = new ArrayList<Moment>();
    }
 
    public String getName() {
@@ -34,7 +40,7 @@ public class Collection implements Parcelable{
       this.moments = moments;
    }
 
-   public void addMoments(Moment moment) {
+   public void addMoment(Moment moment) {
       this.moments.add(moment);
    }
 

@@ -11,6 +11,10 @@ class Moment implements Parcelable {
     private String title;
     private String description;
 
+    Moment(){
+        // Default constructor for Firebase
+    }
+
     Moment(String title, String description) {
         this.title = title;
         this.description = description;

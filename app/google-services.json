@@ -1,0 +1,55 @@
+{
+  "project_info": {
+    "project_number": "1073590468710",
+    "firebase_url": "https://albus-7dde2.firebaseio.com",
+    "project_id": "albus-7dde2",
+    "storage_bucket": "albus-7dde2.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:1073590468710:android:742787e71b545f33",
+        "android_client_info": {
+          "package_name": "xyz.nlaz.albus"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "1073590468710-8kt8su07gk8o9fngrulqquq9r95ioab7.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "xyz.nlaz.albus",
+            "certificate_hash": "EDFB9C2AFCE5144DAC0C4CE91673B7511B9934D5"
+          }
+        },
+        {
+          "client_id": "1073590468710-66rlg40cde8199ngtr16ogr26ds69nod.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDs5l7wGkAO6cmIdOtrofeCn23WeiVGvg4"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 2,
+          "other_platform_oauth_client": [
+            {
+              "client_id": "1073590468710-66rlg40cde8199ngtr16ogr26ds69nod.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
