@@ -142,9 +142,8 @@ public class MomentsActivity extends AppCompatActivity {
     /* Helper Methods */
     private void updateMomentInList(Moment m) {
         for (int i = 0; i < objects.size(); i++) {
-            if (objects.get(i).getId() == m.getId()) {
+            if (objects.get(i).getId().equals(m.getId())) {
                 objects.set(i, m);
-                Toast.makeText(this, "UPDATE!", Toast.LENGTH_SHORT).show();
                 adapter.notifyDataSetChanged();
                 return;
             }
@@ -153,7 +152,7 @@ public class MomentsActivity extends AppCompatActivity {
 
     private void removeMomentInList(Moment m) {
         for (Moment moment: objects) {
-            if (moment.getId() == m.getId()) {
+            if (moment.getId().equals(m.getId())) {
                 objects.remove(moment);
                 adapter.notifyDataSetChanged();
                 return;

@@ -26,6 +26,7 @@ public class CreateMomentActivity extends AppCompatActivity {
         setContentView(R.layout.activity_create_item);
 
         Bundle bundle = getIntent().getExtras();
+        moment = new Moment();
 
         titleInput = (EditText) findViewById(R.id.title);
         descriptionInput = (EditText) findViewById(R.id.description);
@@ -73,11 +74,11 @@ public class CreateMomentActivity extends AppCompatActivity {
                 return;
             } else {
                 Intent i = new Intent();
-                String title = titleInput.getText().toString();
-                String description = descriptionInput.getText().toString();
-                Moment newMoment = new Moment(title, description);
-                i.putExtra("moment", newMoment);
-                setResult(Activity.RESULT_OK, i);
+                int resultCode = isEditView ? MomentsActivity.RESULT_CODE_UPDATE : Activity.RESULT_OK;
+                moment.setTitle(titleInput.getText().toString());
+                moment.setDescription(descriptionInput.getText().toString());
+                i.putExtra("moment", moment);
+                setResult(resultCode, i);
                 finish();
             }
         }
