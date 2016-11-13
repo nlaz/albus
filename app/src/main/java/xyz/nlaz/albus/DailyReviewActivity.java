@@ -10,7 +10,7 @@ import android.widget.TextView;
 
 import java.util.ArrayList;
 
-public class ReviewActivity extends AppCompatActivity {
+public class DailyReviewActivity extends AppCompatActivity {
 
     private ArrayList<Moment> objects;
     private TextView titleView;
@@ -34,7 +34,10 @@ public class ReviewActivity extends AppCompatActivity {
         reportText = (TextView) findViewById(R.id.report_text);
 
         Bundle bundle = getIntent().getExtras();
-        objects = bundle.getParcelableArrayList("moments");
+        if (bundle != null){
+            objects = bundle.getParcelableArrayList("moments");
+        }
+        objects = new ArrayList<>();
         momentsReviewed = objects.size();
 
         nextButton.setOnClickListener(nextListener);
@@ -44,9 +47,11 @@ public class ReviewActivity extends AppCompatActivity {
     }
 
     void renderCard() {
-        Moment item = objects.remove(0);
-        titleView.setText(item.getTitle());
-        reportText.setText(item.getDescription());
+        if(objects.size() > 0 ){
+            Moment item = objects.remove(0);
+            titleView.setText(item.getTitle());
+            reportText.setText(item.getDescription());
+        }
     }
 
     void toggleView(View v) {
@@ -56,6 +61,8 @@ public class ReviewActivity extends AppCompatActivity {
             v.setVisibility(View.GONE);
         }
     }
+
+
 
     /* View Listeners */
     private View.OnClickListener finishListener = new View.OnClickListener() {

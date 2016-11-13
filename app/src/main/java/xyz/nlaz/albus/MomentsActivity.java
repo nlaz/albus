@@ -6,7 +6,6 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -18,9 +17,6 @@ import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.google.firebase.database.ChildEventListener;
-import com.google.firebase.database.DataSnapshot;
-import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
@@ -60,21 +56,6 @@ public class MomentsActivity extends AppCompatActivity {
 
         adapter = new ViewAdapter(this, R.layout.list_item, objects);
         listView.setAdapter(adapter);
-
-        /* Commented out Firebase code */
-//        Bundle bundle = getIntent().getExtras();
-
-//        collection = bundle.getParcelable("collection");
-//        collectionId = bundle.getString("collectionId");
-
-//        database = FirebaseDatabase.getInstance();
-//        collectionRef = database.getReference().child("collections").child(collectionId);
-
-//        collectionRef.setValue(collection);
-//        objects = collection.getMoments();
-
-//        momentsRef = collectionRef.child("moments");
-//        momentsRef.addChildEventListener(childListener);
     }
 
     @Override
@@ -95,7 +76,7 @@ public class MomentsActivity extends AppCompatActivity {
             case R.id.review_button:
                 if (objects.size() > 0) {
                     Toast.makeText(this, "Review selected", Toast.LENGTH_SHORT).show();
-                    Intent reviewIntent = new Intent(this, ReviewActivity.class);
+                    Intent reviewIntent = new Intent(this, DailyReviewActivity.class);
                     reviewIntent.putParcelableArrayListExtra("moments", objects);
                     startActivity(reviewIntent);
                 } else {
@@ -200,38 +181,4 @@ public class MomentsActivity extends AppCompatActivity {
            }
        };
     }
-
-    /* DB Listener */
-    ChildEventListener childListener = new ChildEventListener() {
-        @Override
-        public void onChildAdded(DataSnapshot dataSnapshot, String s) {
-            Moment newMoment = dataSnapshot.getValue(Moment.class);
-            objects.add(newMoment);
-            adapter.notifyDataSetChanged();
-            Toast.makeText(getApplicationContext(), "MomentsActivity - onChildAdded", Toast.LENGTH_SHORT).show();
-        }
-
-        @Override
-        public void onChildChanged(DataSnapshot dataSnapshot, String s) {
-            //TODO
-            Toast.makeText(getApplicationContext(), "MomentsActivity - onChildChanged", Toast.LENGTH_SHORT).show();
-        }
-
-        @Override
-        public void onChildRemoved(DataSnapshot dataSnapshot) {
-            //TODO
-            Toast.makeText(MomentsActivity.this, "MomentsActivity - onChildRemoved", Toast.LENGTH_SHORT).show();
-        }
-
-        @Override
-        public void onChildMoved(DataSnapshot dataSnapshot, String s) {
-            //TODO
-            Toast.makeText(MomentsActivity.this, "MomentsActivity - onChildMoved", Toast.LENGTH_SHORT).show();
-        }
-
-        @Override
-        public void onCancelled(DatabaseError databaseError) {
-            Log.w("CollectionsActivity", "MomentsActivity - loadPost:onCancelled", databaseError.toException());
-        }
-    };
 }

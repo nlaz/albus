@@ -8,7 +8,7 @@
         android:label="@string/app_name"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".MomentsActivity">
+        <activity android:name=".DailyReviewActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -16,9 +16,9 @@
             </intent-filter>
         </activity>
         <activity android:name=".CreateMomentActivity" />
-        <activity android:name=".ReviewActivity" />
+        <activity android:name=".MomentsActivity" />
         <activity android:name=".CollectionsActivity" />
-        <activity android:name=".CreateCollectionActivity"></activity>
+        <activity android:name=".CreateCollectionActivity" />
     </application>
 
 </manifest>
