@@ -1,4 +1,4 @@
-package xyz.nlaz.albus;
+package models;
 
 import android.os.Parcel;
 import android.os.Parcelable;

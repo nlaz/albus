@@ -10,6 +10,8 @@ import android.widget.TextView;
 
 import java.util.ArrayList;
 
+import models.Moment;
+
 public class DailyReviewActivity extends AppCompatActivity {
 
     private ArrayList<Moment> objects;

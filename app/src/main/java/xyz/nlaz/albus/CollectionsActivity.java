@@ -27,6 +27,9 @@ import com.google.firebase.database.FirebaseDatabase;
 import java.util.ArrayList;
 import java.util.List;
 
+import models.Collection;
+import models.Moment;
+
 public class CollectionsActivity extends AppCompatActivity {
 
     private GridView gridView;

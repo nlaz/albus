@@ -1,4 +1,4 @@
-package xyz.nlaz.albus;
+package db;
 
 import android.content.ContentValues;
 import android.content.Context;
@@ -7,6 +7,8 @@ import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 
 import java.util.ArrayList;
+
+import models.Moment;
 
 /**
  * Created by nlazaris on 11/7/16.

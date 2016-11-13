@@ -1,4 +1,4 @@
-package xyz.nlaz.albus;
+package db;
 
 import android.provider.BaseColumns;
 

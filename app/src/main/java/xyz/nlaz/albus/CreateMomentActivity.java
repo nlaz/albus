@@ -12,6 +12,8 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
+import models.Moment;
+
 public class CreateMomentActivity extends AppCompatActivity {
 
     private EditText titleInput;
