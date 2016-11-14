@@ -1,27 +1,38 @@
 package xyz.nlaz.albus;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
 
+import db.SQLiteHelper;
 import models.Moment;
 
 public class DailyReviewActivity extends AppCompatActivity {
 
-    private ArrayList<Moment> objects;
+    private List<Moment> objects;
     private TextView titleView;
     private TextView notesView;
     private Button nextButton;
     private RelativeLayout cardView;
     private LinearLayout reportView;
     private TextView reportText;
-    private int momentsReviewed;
+    private TextView progressText;
+    private int itemTotal;
+    private int itemCount;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -34,26 +45,59 @@ public class DailyReviewActivity extends AppCompatActivity {
         cardView = (RelativeLayout) findViewById(R.id.item_card);
         reportView = (LinearLayout) findViewById(R.id.report_view);
         reportText = (TextView) findViewById(R.id.report_text);
+        progressText = (TextView) findViewById(R.id.review_progress);
 
-        Bundle bundle = getIntent().getExtras();
-        if (bundle != null){
-            objects = bundle.getParcelableArrayList("moments");
-        }
         objects = new ArrayList<>();
-        momentsReviewed = objects.size();
+
+        SQLiteHelper dbHelper = new SQLiteHelper(this);
+        objects = generateDailyStack( dbHelper.getAllMoments() );
+
+        itemCount = 0;
+        itemTotal = objects.size();
 
         nextButton.setOnClickListener(nextListener);
         cardView.setOnClickListener(cardListener);
 
-        renderCard();
+        renderView();
     }
 
-    void renderCard() {
-        if(objects.size() > 0 ){
+    void renderView() {
+        progressText.setText(itemCount + "/" + itemTotal);
+        if ( objects.isEmpty() ) {
+            cardView.setVisibility(View.GONE);
+            reportView.setVisibility(View.VISIBLE);
+            reportText.setText(String.format("Yay! You reviewed %d moments today.", itemTotal));
+
+            nextButton.setVisibility(View.GONE);
+        } else {
             Moment item = objects.remove(0);
             titleView.setText(item.getTitle());
-            reportText.setText(item.getDescription());
+            notesView.setText(item.getDescription());
         }
+    }
+
+    List<Moment> generateDailyStack( ArrayList<Moment> allMoments) {
+        Collections.shuffle(allMoments);
+        return allMoments.subList(0,3);
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        MenuInflater inflater = getMenuInflater();
+        inflater.inflate(R.menu.daily_menu, menu);
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch(item.getItemId()) {
+            case R.id.list_button:
+                Toast.makeText(this, "Moments list selected", Toast.LENGTH_SHORT).show();
+                Intent addIntent = new Intent(this, MomentsActivity.class);
+                startActivity(addIntent);
+                break;
+        }
+        return true;
     }
 
     void toggleView(View v) {
@@ -64,27 +108,12 @@ public class DailyReviewActivity extends AppCompatActivity {
         }
     }
 
-
-
     /* View Listeners */
-    private View.OnClickListener finishListener = new View.OnClickListener() {
-        @Override
-        public void onClick(View v) {
-            finish();
-        }
-    };
-
     private View.OnClickListener nextListener = new View.OnClickListener() {
         @Override
         public void onClick(View v) {
-            if (objects.isEmpty()) {
-                cardView.setVisibility(View.GONE);
-                reportView.setVisibility(View.VISIBLE);
-                reportText.setText(String.format("You just reviewed %d moments.", momentsReviewed));
-
-                nextButton.setText("FINISH");
-                nextButton.setOnClickListener(finishListener);
-            } else { renderCard(); }
+            itemCount++;
+            renderView();
         }
     };
 

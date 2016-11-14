@@ -19,7 +19,7 @@ public class Collection implements Parcelable{
         moments = new ArrayList<Moment>();
     }
 
-   Collection(String name) {
+   public Collection(String name) {
         this.name = name;
         this.moments = new ArrayList<Moment>();
    }

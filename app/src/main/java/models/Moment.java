@@ -7,21 +7,21 @@ import android.os.Parcelable;
  * Created by nlazaris on 10/24/16.
  */
 
-class Moment implements Parcelable {
+public class Moment implements Parcelable {
     private Integer id;
     private String title;
     private String description;
 
-    Moment(){
+    public Moment(){
         // Default constructor for Firebase
     }
 
-    Moment(String title, String description) {
+    public Moment(String title, String description) {
         this.title = title;
         this.description = description;
     }
 
-    Moment(Integer id, String title, String description) {
+    public Moment(Integer id, String title, String description) {
         this.id = id;
         this.title = title;
         this.description = description;

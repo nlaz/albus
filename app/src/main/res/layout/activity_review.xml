@@ -9,45 +9,68 @@
     android:paddingRight="@dimen/activity_horizontal_margin"
     android:paddingTop="@dimen/activity_vertical_margin"
     android:background="@color/colorLightGray"
-    tools:context="xyz.nlaz.albus.ReviewActivity">
+    tools:context="xyz.nlaz.albus.DailyReviewActivity">
+
+    <TextView
+        android:id="@+id/review_progress"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="0/5"
+        android:layout_alignParentEnd="true" />
+
 
     <RelativeLayout
         android:id="@+id/item_card"
         android:layout_width="match_parent"
-        android:layout_height="250dp"
-        android:layout_centerInParent="true"
-        android:translationZ="2dp"
-        android:background="#ffffff">
+        android:layout_height="match_parent">
 
-        <LinearLayout
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="250dp"
             android:layout_centerInParent="true"
-            android:orientation="vertical">
+            android:translationZ="2dp"
+            android:background="#ffffff">
 
-            <TextView
-                android:id="@+id/item_title"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:textAlignment="center"
-                android:textColor="@android:color/black"
-                android:text="Placeholder"
-                android:textSize="24sp"
-                android:layout_centerInParent="true"/>
-
-            <TextView
-                android:id="@+id/item_notes"
+            <LinearLayout
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_below="@+id/title"
-                android:visibility="gone"
-                android:layout_marginTop="10dp"
-                android:layout_marginLeft="30dp"
-                android:layout_marginRight="30dp"
-                android:textAlignment="center"
-                android:textSize="18sp"
-                android:text="Taxidermy vice activated charcoal authentic beard craft beer. Cardigan af meh iceland biodiesel"/>
-        </LinearLayout>
+                android:layout_centerInParent="true"
+                android:orientation="vertical">
+
+                <TextView
+                    android:id="@+id/item_title"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:textAlignment="center"
+                    android:textColor="@android:color/black"
+                    android:text="Placeholder"
+                    android:textSize="24sp"
+                    android:layout_centerInParent="true"/>
+
+                <TextView
+                    android:id="@+id/item_notes"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/title"
+                    android:visibility="gone"
+                    android:layout_marginTop="10dp"
+                    android:layout_marginLeft="30dp"
+                    android:layout_marginRight="30dp"
+                    android:textAlignment="center"
+                    android:textSize="18sp"
+                    android:text="Taxidermy vice activated charcoal authentic beard craft beer. Cardigan af meh iceland biodiesel"/>
+            </LinearLayout>
+
+        </RelativeLayout>
+
+        <Button
+            android:id="@+id/next_button"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@color/colorPrimaryBlue"
+            android:textColor="@android:color/white"
+            android:text="Next"
+            android:layout_alignParentBottom="true"/>
 
     </RelativeLayout>
 
@@ -55,35 +78,26 @@
         android:id="@+id/report_view"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_centerInParent="true"
         android:visibility="gone"
         android:orientation="vertical">
-
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="NICE JOB!"
-            android:textSize="20sp"
-            android:textColor="@color/colorPrimaryBlue"
-            android:textStyle="bold"/>
 
         <TextView
             android:id="@+id/report_text"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:textColor="@android:color/black"
-            android:text="Taxidermy vice activated charcoal authentic beard craft beer. Cardigan af meh iceland biodiesel"
-            android:layout_marginTop="20dp"
-            android:textSize="18sp"/>
+            android:textAlignment="center"
+            android:text="No more items today"
+            android:textSize="20sp"/>
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:text="Come back tomorrow for more."
+            android:textColor="#9a9a9a"
+            android:textAlignment="center"
+            android:textSize="16sp" />
 
     </LinearLayout>
-
-    <Button
-        android:id="@+id/next_button"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:background="@color/colorPrimaryBlue"
-        android:textColor="@android:color/white"
-        android:text="Next"
-        android:layout_alignParentBottom="true"/>
 
 </RelativeLayout>
