@@ -48,7 +48,8 @@ public class MomentsActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        setContentView(R.layout.moments_activity);
 
         listView = (ListView) findViewById(R.id.listview);
         emptyView = (TextView) findViewById(R.id.emptyView);
@@ -77,15 +78,9 @@ public class MomentsActivity extends AppCompatActivity {
                 Intent addIntent = new Intent(this, CreateMomentActivity.class);
                 startActivityForResult(addIntent, REQUEST_CODE_NEW);
                 break;
-            case R.id.review_button:
-                if (objects.size() > 0) {
-                    Toast.makeText(this, "Review selected", Toast.LENGTH_SHORT).show();
-                    Intent reviewIntent = new Intent(this, DailyReviewActivity.class);
-                    reviewIntent.putParcelableArrayListExtra("moments", objects);
-                    startActivity(reviewIntent);
-                } else {
-                    Toast.makeText(this, "No items available", Toast.LENGTH_SHORT).show();
-                }
+            case android.R.id.home:
+                Toast.makeText(this, "Review selected", Toast.LENGTH_SHORT).show();
+                finish();
                 break;
         }
         return true;

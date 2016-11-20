@@ -37,7 +37,7 @@ public class DailyReviewActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_review);
+        setContentView(R.layout.review_activity);
 
         titleView = (TextView) findViewById(R.id.item_title);
         notesView = (TextView) findViewById(R.id.item_notes);
@@ -72,13 +72,17 @@ public class DailyReviewActivity extends AppCompatActivity {
         } else {
             Moment item = objects.remove(0);
             titleView.setText(item.getTitle());
-            notesView.setText(item.getDescription());
+            if (item.getDescription().isEmpty()) {
+                notesView.setText("Oops! There's nothing here...");
+            } else {
+                notesView.setText(item.getDescription());
+            }
         }
     }
 
     List<Moment> generateDailyStack( ArrayList<Moment> allMoments) {
         Collections.shuffle(allMoments);
-        return allMoments.subList(0,3);
+        return allMoments.subList(0, Math.min(allMoments.size(), 3));
     }
 
     @Override
@@ -120,7 +124,9 @@ public class DailyReviewActivity extends AppCompatActivity {
     private View.OnClickListener cardListener = new View.OnClickListener() {
         @Override
         public void onClick(View v) {
-            toggleView(notesView);
+            if (notesView.getText().length() > 0) {
+                toggleView(notesView);
+            }
         }
     };
 }
