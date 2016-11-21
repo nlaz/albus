@@ -3,8 +3,8 @@
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <item
-        android:id="@+id/add_button"
+        android:id="@+id/list_button"
         app:showAsAction="always"
-        android:icon="@android:drawable/ic_menu_add"
-        android:title="Add" />
+        android:icon="@drawable/ic_clear_all"
+        android:title="List" />
 </menu>

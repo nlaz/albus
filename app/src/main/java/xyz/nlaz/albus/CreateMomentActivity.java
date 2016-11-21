@@ -25,7 +25,7 @@ public class CreateMomentActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.item_activity);
+        setContentView(R.layout.create_activity);
 
         Bundle bundle = getIntent().getExtras();
         moment = new Moment();

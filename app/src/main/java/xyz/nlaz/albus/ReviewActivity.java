@@ -20,7 +20,14 @@ import java.util.List;
 import db.SQLiteHelper;
 import models.Moment;
 
-public class DailyReviewActivity extends AppCompatActivity {
+/**
+ * ReviewActivity - Controls the logic for the Review
+ * screen which is launched on app start. This activity pulls
+ * any memory items from the SQLite database and setups up the views
+ * to control the logic for reviewing those items.
+ */
+
+public class ReviewActivity extends AppCompatActivity {
 
     private List<Moment> objects;
     private TextView titleView;
@@ -32,7 +39,6 @@ public class DailyReviewActivity extends AppCompatActivity {
     private TextView progressText;
     private int itemTotal;
     private int itemCount;
-
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -49,6 +55,7 @@ public class DailyReviewActivity extends AppCompatActivity {
 
         objects = new ArrayList<>();
 
+        /* Fetch memory items from db */
         SQLiteHelper dbHelper = new SQLiteHelper(this);
         objects = generateDailyStack( dbHelper.getAllMoments() );
 
@@ -61,6 +68,10 @@ public class DailyReviewActivity extends AppCompatActivity {
         renderView();
     }
 
+    /**
+     * renderView - Updates card view states depending
+     * on whether there are any objects left to review
+     */
     void renderView() {
         progressText.setText(itemCount + "/" + itemTotal);
         if ( objects.isEmpty() ) {
@@ -88,7 +99,7 @@ public class DailyReviewActivity extends AppCompatActivity {
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         MenuInflater inflater = getMenuInflater();
-        inflater.inflate(R.menu.daily_menu, menu);
+        inflater.inflate(R.menu.review_menu, menu);
         return true;
     }
 

@@ -59,7 +59,7 @@ public class MomentsActivity extends AppCompatActivity {
         dbHelper = new SQLiteHelper(this);
         objects = dbHelper.getAllMoments();
 
-        adapter = new ViewAdapter(this, R.layout.list_item, objects);
+        adapter = new ViewAdapter(this, R.layout.moments_item, objects);
         listView.setAdapter(adapter);
     }
 
