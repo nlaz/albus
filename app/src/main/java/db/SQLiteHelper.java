@@ -11,6 +11,8 @@ import java.util.ArrayList;
 import models.Moment;
 
 /**
+ * SQLiteHelper - Handles device database queries.
+ *
  * Created by nlazaris on 11/7/16.
  */
 

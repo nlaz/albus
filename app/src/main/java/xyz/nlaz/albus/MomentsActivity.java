@@ -17,27 +17,24 @@ import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.google.firebase.database.DatabaseReference;
-import com.google.firebase.database.FirebaseDatabase;
-
 import java.util.ArrayList;
 import java.util.List;
 
 import db.SQLiteHelper;
-import models.Collection;
 import models.Moment;
+
+/**
+ * MomentsActivity - Controls the logic for the Moments
+ * ListView. This activity displays memory items in a list
+ * format and allows user to update and remove items.
+ */
 
 public class MomentsActivity extends AppCompatActivity {
 
     private ListView listView;
-    private String collectionId;
     private ArrayList<Moment> objects;
     private ViewAdapter adapter;
     private TextView emptyView;
-    private Collection collection;
-    private FirebaseDatabase database;
-    private DatabaseReference collectionRef;
-    private DatabaseReference momentsRef;
     private SQLiteHelper dbHelper;
 
     public static final int REQUEST_CODE_EDIT = 1;

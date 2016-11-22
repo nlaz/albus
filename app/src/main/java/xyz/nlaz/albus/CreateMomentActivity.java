@@ -14,6 +14,12 @@ import android.widget.Toast;
 
 import models.Moment;
 
+/**
+ * CreateMomentActivity - Controls the logic for new moments.
+ * Allows the user to create or update new items through a
+ * form.
+ */
+
 public class CreateMomentActivity extends AppCompatActivity {
 
     private EditText titleInput;
