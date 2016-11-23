@@ -1,6 +1,8 @@
 package xyz.nlaz.albus;
 
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.view.Menu;
@@ -14,6 +16,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Collections;
 import java.util.List;
 
@@ -55,9 +58,18 @@ public class ReviewActivity extends AppCompatActivity {
 
         objects = new ArrayList<>();
 
-        /* Fetch memory items from db */
-        SQLiteHelper dbHelper = new SQLiteHelper(this);
-        objects = generateDailyStack( dbHelper.getAllMoments() );
+        SharedPreferences prefs = this.getPreferences(Context.MODE_PRIVATE);
+        int lastSave = prefs.getInt("lastUpdate", -1);
+        Calendar calendar = Calendar.getInstance();
+        int dayOfYear = calendar.get(Calendar.DAY_OF_YEAR);
+
+        if (lastSave != -1 && lastSave == dayOfYear) {
+            Toast.makeText(this, "You've already reviewed today. New items tomorrow!", Toast.LENGTH_SHORT).show();
+        } else {
+            /* Fetch memory items from db */
+            SQLiteHelper dbHelper = new SQLiteHelper(this);
+            objects = generateDailyStack( dbHelper.getAllMoments() );
+        }
 
         itemCount = 0;
         itemTotal = objects.size();
@@ -91,8 +103,17 @@ public class ReviewActivity extends AppCompatActivity {
         }
     }
 
+    void saveTodayDate() {
+        Calendar today = Calendar.getInstance();
+        SharedPreferences prefs = this.getPreferences(Context.MODE_PRIVATE);
+        SharedPreferences.Editor editor = prefs.edit();
+        editor.putInt("lastUpdate", today.get(Calendar.DAY_OF_YEAR));
+        editor.apply();
+    }
+
     List<Moment> generateDailyStack( ArrayList<Moment> allMoments) {
         Collections.shuffle(allMoments);
+        saveTodayDate();
         return allMoments.subList(0, Math.min(allMoments.size(), 3));
     }
 
