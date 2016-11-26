@@ -16,6 +16,7 @@
             </intent-filter>
         </activity>
         <activity android:name=".CreateMomentActivity" />
+        <activity android:name=".SettingsOption" />
         <activity android:name=".MomentsActivity">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"

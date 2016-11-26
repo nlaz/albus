@@ -14,6 +14,8 @@ import android.widget.Toast;
 
 import models.Moment;
 
+import static xyz.nlaz.albus.MomentsActivity.REQUEST_CODE_NEW;
+
 /**
  * CreateMomentActivity - Controls the logic for new moments.
  * Allows the user to create or update new items through a
@@ -68,6 +70,11 @@ public class CreateMomentActivity extends AppCompatActivity {
                 i.putExtra("moment", moment);
                 setResult(MomentsActivity.RESULT_CODE_DELETE, i);
                 finish();
+                break;
+            case R.id.settings:
+                Toast.makeText(this, "Settings selected", Toast.LENGTH_SHORT).show();
+                Intent settingsIntent = new Intent(this, SettingsOption.class);
+                startActivityForResult(settingsIntent, REQUEST_CODE_NEW);
                 break;
         }
         return true;

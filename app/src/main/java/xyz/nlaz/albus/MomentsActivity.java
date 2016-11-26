@@ -51,17 +51,6 @@ public class MomentsActivity extends AppCompatActivity {
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         setContentView(R.layout.moments_activity);
 
-        // Daily Notificavations
-        Calendar calender = Calendar.getInstance();
-        calender.set(Calendar.HOUR_OF_DAY,07);
-        calender.set(Calendar.MINUTE,05);
-        Intent intent = new Intent(getApplicationContext(), Notification_reciever.class);
-        PendingIntent pendingIntent = PendingIntent.getBroadcast(getApplicationContext(), 100, intent, PendingIntent.FLAG_UPDATE_CURRENT);
-
-        AlarmManager alarmManager = (AlarmManager) getSystemService(ALARM_SERVICE);
-        alarmManager.setRepeating(AlarmManager.RTC_WAKEUP, calender.getTimeInMillis(), AlarmManager.INTERVAL_DAY, pendingIntent);
-
-
         listView = (ListView) findViewById(R.id.listview);
         emptyView = (TextView) findViewById(R.id.emptyView);
 
@@ -92,6 +81,11 @@ public class MomentsActivity extends AppCompatActivity {
             case android.R.id.home:
                 Toast.makeText(this, "Review selected", Toast.LENGTH_SHORT).show();
                 finish();
+                break;
+            case R.id.settings:
+                Toast.makeText(this, "Settings selected", Toast.LENGTH_SHORT).show();
+                Intent settingsIntent = new Intent(this, SettingsOption.class);
+                startActivityForResult(settingsIntent, REQUEST_CODE_NEW);
                 break;
         }
         return true;

@@ -7,4 +7,10 @@
         app:showAsAction="always"
         android:icon="@drawable/ic_delete"
         android:title="Delete" />
+    <item
+        android:title="Item"
+        app:showAsAction="always"
+        android:id="@+id/settings"
+        android:icon="@android:drawable/ic_menu_manage" />
+
 </menu>
