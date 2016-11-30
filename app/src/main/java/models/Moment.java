@@ -11,6 +11,7 @@ public class Moment implements Parcelable {
     private Integer id;
     private String title;
     private String description;
+    private Integer reviewCount;
 
     public Moment(){
         // Default constructor for Firebase
@@ -21,10 +22,19 @@ public class Moment implements Parcelable {
         this.description = description;
     }
 
-    public Moment(Integer id, String title, String description) {
+    public Moment(Integer id, String title, String description, Integer count) {
         this.id = id;
         this.title = title;
         this.description = description;
+        this.reviewCount = count;
+    }
+
+    public Integer getId() {
+        return id;
+    }
+
+    public void setId(Integer id) {
+        this.id = id;
     }
 
     public String getTitle() {
@@ -43,12 +53,12 @@ public class Moment implements Parcelable {
         this.description = description;
     }
 
-    public Integer getId() {
-        return id;
+    public Integer getReviewCount() {
+        return reviewCount;
     }
 
-    public void setId(Integer id) {
-        this.id = id;
+    public void setReviewCount(Integer reviewCount) {
+        this.reviewCount = reviewCount;
     }
 
     @Override
@@ -61,12 +71,14 @@ public class Moment implements Parcelable {
         dest.writeSerializable(id);
         dest.writeString(title);
         dest.writeString(description);
+        dest.writeInt(reviewCount);
     }
 
     private Moment(Parcel in) {
         id = (Integer) in.readSerializable();
         title = in.readString();
         description = in.readString();
+        reviewCount = in.readInt();
     }
 
     public static final Creator<Moment> CREATOR = new Creator<Moment>() {

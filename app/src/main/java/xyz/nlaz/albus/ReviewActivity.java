@@ -45,6 +45,9 @@ public class ReviewActivity extends AppCompatActivity {
     private int itemTotal;
     private int itemCount;
 
+    private static int REVIEW_LIMIT = 5;
+    private static boolean DEBUG = true;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -65,7 +68,7 @@ public class ReviewActivity extends AppCompatActivity {
         Calendar calendar = Calendar.getInstance();
         int dayOfYear = calendar.get(Calendar.DAY_OF_YEAR);
 
-        if (lastSave != -1 && lastSave == dayOfYear) {
+        if (!DEBUG && lastSave != -1 && lastSave == dayOfYear) {
             Toast.makeText(this, "You've already reviewed today. New items tomorrow!", Toast.LENGTH_SHORT).show();
         } else {
             /* Fetch memory items from db */
@@ -116,7 +119,7 @@ public class ReviewActivity extends AppCompatActivity {
     List<Moment> generateDailyStack( ArrayList<Moment> allMoments) {
         Collections.shuffle(allMoments);
         saveTodayDate();
-        return allMoments.subList(0, Math.min(allMoments.size(), 3));
+        return allMoments.subList(0, Math.min(allMoments.size(), REVIEW_LIMIT));
     }
 
     @Override

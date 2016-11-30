@@ -18,12 +18,12 @@ import models.Moment;
 
 public class SQLiteHelper extends SQLiteOpenHelper{
 
-    public static final int DATABASE_VERSION = 1;
+    public static final int DATABASE_VERSION = 2;
     public static final String DATABASE_NAME = "PENSIEVE_DB.db";
     private static final MomentEntityContract.MomentEntity MomentEntity = new MomentEntityContract.MomentEntity();
 
     public SQLiteHelper(Context context) {
-        super(context, DATABASE_NAME, null, 1);
+        super(context, DATABASE_NAME, null, DATABASE_VERSION);
     }
 
     @Override
@@ -33,9 +33,9 @@ public class SQLiteHelper extends SQLiteOpenHelper{
 
     @Override
     public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
-        // Handles upgrades by dropping the table and creating a new one
-        db.execSQL(MomentEntityContract.SQL_DELETE_ENTRIES);
-        onCreate(db);
+        if (oldVersion == 1 && newVersion == 2) {
+            db.execSQL(MomentEntityContract.ALTER_ADD_REVIEW_COUNT);
+        }
     }
 
     public Integer insertMoment(Moment moment) {
@@ -71,11 +71,12 @@ public class SQLiteHelper extends SQLiteOpenHelper{
         c.moveToFirst();
 
         while(c.isAfterLast() == false) {
-            int id = c.getInt(c.getColumnIndex(MomentEntity._ID));
-            String title = c.getString(c.getColumnIndex(MomentEntity.COLUMN_TITLE));
-            String desc = c.getString(c.getColumnIndex(MomentEntity.COLUMN_DESCRIPTION));
+            Integer id    = c.getInt(c.getColumnIndex(MomentEntity._ID));
+            Integer count = c.getInt(c.getColumnIndex(MomentEntity.COLUMN_REVIEW_COUNT));
+            String title  = c.getString(c.getColumnIndex(MomentEntity.COLUMN_TITLE));
+            String desc   = c.getString(c.getColumnIndex(MomentEntity.COLUMN_DESCRIPTION));
 
-            list.add(new Moment(id, title, desc));
+            list.add(new Moment(id, title, desc, count));
             c.moveToNext();
         }
         return list;
