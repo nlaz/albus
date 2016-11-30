@@ -11,7 +11,7 @@ public class Moment implements Parcelable {
     private Integer id;
     private String title;
     private String description;
-    private Integer reviewCount;
+    private Integer reviewCount = 0;
 
     public Moment(){
         // Default constructor for Firebase
@@ -59,6 +59,10 @@ public class Moment implements Parcelable {
 
     public void setReviewCount(Integer reviewCount) {
         this.reviewCount = reviewCount;
+    }
+
+    public void incrementReviewCount() {
+        this.reviewCount++;
     }
 
     @Override

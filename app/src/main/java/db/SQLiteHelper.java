@@ -54,6 +54,7 @@ public class SQLiteHelper extends SQLiteOpenHelper{
         ContentValues values = new ContentValues();
         values.put(MomentEntity.COLUMN_TITLE, moment.getTitle());
         values.put(MomentEntity.COLUMN_DESCRIPTION, moment.getDescription());
+        values.put(MomentEntity.COLUMN_REVIEW_COUNT, moment.getReviewCount());
         db.update(MomentEntity.TABLE_NAME, values, MomentEntity._ID + " = ? ", new String[] { Integer.toString(id) });
         return true;
     }
@@ -75,7 +76,6 @@ public class SQLiteHelper extends SQLiteOpenHelper{
             Integer count = c.getInt(c.getColumnIndex(MomentEntity.COLUMN_REVIEW_COUNT));
             String title  = c.getString(c.getColumnIndex(MomentEntity.COLUMN_TITLE));
             String desc   = c.getString(c.getColumnIndex(MomentEntity.COLUMN_DESCRIPTION));
-
             list.add(new Moment(id, title, desc, count));
             c.moveToNext();
         }

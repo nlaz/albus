@@ -18,6 +18,7 @@ import android.widget.Toast;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Collections;
+import java.util.Comparator;
 import java.util.List;
 
 import db.SQLiteHelper;
@@ -45,6 +46,7 @@ public class ReviewActivity extends AppCompatActivity {
     private int itemTotal;
     private int itemCount;
 
+    private SQLiteHelper dbHelper;
     private static int REVIEW_LIMIT = 5;
     private static boolean DEBUG = true;
 
@@ -72,7 +74,7 @@ public class ReviewActivity extends AppCompatActivity {
             Toast.makeText(this, "You've already reviewed today. New items tomorrow!", Toast.LENGTH_SHORT).show();
         } else {
             /* Fetch memory items from db */
-            SQLiteHelper dbHelper = new SQLiteHelper(this);
+            dbHelper = new SQLiteHelper(this);
             objects = generateDailyStack( dbHelper.getAllMoments() );
         }
 
@@ -105,6 +107,8 @@ public class ReviewActivity extends AppCompatActivity {
             } else {
                 notesView.setText(item.getDescription());
             }
+            item.incrementReviewCount();
+            dbHelper.updateMoment(item.getId(), item);
         }
     }
 
@@ -117,7 +121,12 @@ public class ReviewActivity extends AppCompatActivity {
     }
 
     List<Moment> generateDailyStack( ArrayList<Moment> allMoments) {
-        Collections.shuffle(allMoments);
+        Collections.sort(allMoments, new Comparator<Moment>() {
+            @Override
+            public int compare(Moment lhs, Moment rhs) {
+                return lhs.getReviewCount().compareTo(rhs.getReviewCount());
+            }
+        });
         saveTodayDate();
         return allMoments.subList(0, Math.min(allMoments.size(), REVIEW_LIMIT));
     }
