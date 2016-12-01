@@ -24,8 +24,6 @@ import java.util.List;
 import db.SQLiteHelper;
 import models.Moment;
 
-import static xyz.nlaz.albus.MomentsActivity.REQUEST_CODE_NEW;
-
 /**
  * ReviewActivity - Controls the logic for the Review
  * screen which is launched on app start. This activity pulls
@@ -148,8 +146,8 @@ public class ReviewActivity extends AppCompatActivity {
                 break;
             case R.id.settings:
                 Toast.makeText(this, "Settings selected", Toast.LENGTH_SHORT).show();
-                Intent settingsIntent = new Intent(this, SettingsOption.class);
-                startActivityForResult(settingsIntent, REQUEST_CODE_NEW);
+                Intent settingsIntent = new Intent(this, SettingsActivity.class);
+                startActivity(settingsIntent);
                 break;
         }
         return true;

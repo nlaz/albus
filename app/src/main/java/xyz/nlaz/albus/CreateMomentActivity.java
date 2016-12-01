@@ -73,7 +73,7 @@ public class CreateMomentActivity extends AppCompatActivity {
                 break;
             case R.id.settings:
                 Toast.makeText(this, "Settings selected", Toast.LENGTH_SHORT).show();
-                Intent settingsIntent = new Intent(this, SettingsOption.class);
+                Intent settingsIntent = new Intent(this, SettingsActivity.class);
                 startActivityForResult(settingsIntent, REQUEST_CODE_NEW);
                 break;
         }

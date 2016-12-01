@@ -1,8 +1,6 @@
 package xyz.nlaz.albus;
 
 import android.app.Activity;
-import android.app.AlarmManager;
-import android.app.PendingIntent;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
@@ -20,7 +18,6 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import java.util.ArrayList;
-import java.util.Calendar;
 import java.util.List;
 
 import db.SQLiteHelper;
@@ -84,7 +81,7 @@ public class MomentsActivity extends AppCompatActivity {
                 break;
             case R.id.settings:
                 Toast.makeText(this, "Settings selected", Toast.LENGTH_SHORT).show();
-                Intent settingsIntent = new Intent(this, SettingsOption.class);
+                Intent settingsIntent = new Intent(this, SettingsActivity.class);
                 startActivityForResult(settingsIntent, REQUEST_CODE_NEW);
                 break;
         }
