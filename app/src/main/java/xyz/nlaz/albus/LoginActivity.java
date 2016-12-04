@@ -48,7 +48,7 @@ public class LoginActivity extends AppCompatActivity {
             public void onAuthStateChanged(@NonNull FirebaseAuth firebaseAuth){
             if(firebaseAuth.getCurrentUser() != null){
                 /*TODO Add a if statement here checking if the user has memories currently stored in the database. IF they do, go directly to the ReviewMemories Activity, if not, go to Welcome Activity.*/
-                startActivity(new Intent(LoginActivity.this, WelcomeActivity.class));
+                startActivity(new Intent(LoginActivity.this, MomentsActivity.class));
             }
           }
         };

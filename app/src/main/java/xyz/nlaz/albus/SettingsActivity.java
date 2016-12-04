@@ -28,12 +28,8 @@ public class SettingsActivity extends AppCompatActivity{
         setContentView(R.layout.settings_activity_layout);
         Switch toggle = (Switch)findViewById(toggleButton);
         SharedPreferences prefers = this.getSharedPreferences("settings", Context.MODE_PRIVATE);
-        if (prefers.getBoolean("togglebuttonState",true)){
-           toggle.setChecked(true);
-        }
-        else{
-            toggle.setChecked(false);
-        }
+        boolean toggleState = prefers.getBoolean("toggleButtonState", true);
+        toggle.setChecked(toggleState);
         initNotificationState(toggle);
         toggle.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -46,8 +42,7 @@ public class SettingsActivity extends AppCompatActivity{
 
     public void changeNotificationState(View view) {
         boolean checked = ((Switch)view).isChecked();
-        if(checked)
-        {
+        if(checked) {
             // Daily Notifications
             Calendar calender = Calendar.getInstance();
             calender.set(Calendar.HOUR_OF_DAY,07);
@@ -59,27 +54,24 @@ public class SettingsActivity extends AppCompatActivity{
             alarmManager.setRepeating(AlarmManager.RTC_WAKEUP, calender.getTimeInMillis(), AlarmManager.INTERVAL_DAY, pendingIntent);
             SharedPreferences prefs = this.getSharedPreferences("settings", Context.MODE_PRIVATE);
             SharedPreferences.Editor editor = prefs.edit();
-            editor.putBoolean("togglebuttonState",true);
+            editor.putBoolean("toggleButtonState",true);
             editor.apply();
             Toast.makeText(this, "Notifications are On", Toast.LENGTH_SHORT).show();
-        }
-        else
-        {
+        } else {
             // Daily Notifications
             Calendar calender = Calendar.getInstance();
             calender.set(Calendar.HOUR_OF_DAY,00);
             calender.set(Calendar.MINUTE,00);
             SharedPreferences prefs = this.getSharedPreferences("settings", Context.MODE_PRIVATE);
             SharedPreferences.Editor editor = prefs.edit();
-            editor.putBoolean("togglebuttonState",false);
+            editor.putBoolean("toggleButtonState",false);
             editor.apply();
             Toast.makeText(this, "Notifications are Off", Toast.LENGTH_SHORT).show();
         }
     }
     public void initNotificationState(Switch toggle) {
         boolean checked = toggle.isChecked();
-        if(checked)
-        {
+        if(checked) {
             // Daily Notifications
             Calendar calender = Calendar.getInstance();
             calender.set(Calendar.HOUR_OF_DAY,07);
@@ -89,9 +81,7 @@ public class SettingsActivity extends AppCompatActivity{
 
             AlarmManager alarmManager = (AlarmManager) getSystemService(ALARM_SERVICE);
             alarmManager.setRepeating(AlarmManager.RTC_WAKEUP, calender.getTimeInMillis(), AlarmManager.INTERVAL_DAY, pendingIntent);
-        }
-        else
-        {
+        } else {
             // Daily Notifications
             Calendar calender = Calendar.getInstance();
             calender.set(Calendar.HOUR_OF_DAY,00);

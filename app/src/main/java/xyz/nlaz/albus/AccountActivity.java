@@ -2,9 +2,9 @@ package xyz.nlaz.albus;
 
 import android.app.ProgressDialog;
 import android.content.Intent;
+import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
-import android.os.Bundle;
 import android.text.TextUtils;
 import android.view.View;
 import android.widget.Button;
@@ -18,8 +18,6 @@ import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
-
-import org.w3c.dom.Text;
 
 public class AccountActivity extends AppCompatActivity {
     private EditText mNameField;
@@ -54,11 +52,9 @@ public class AccountActivity extends AppCompatActivity {
         mRegisterBtn.setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View view){
-
-                startRegister();
+            startRegister();
             }
         });
-
     }
 
     private void startRegister() {
@@ -68,11 +64,9 @@ public class AccountActivity extends AppCompatActivity {
         String passwordConfirm = mPasswordFieldConfirm.getText().toString().trim();
 
         if(!TextUtils.isEmpty(name) && !TextUtils.isEmpty(email) && !TextUtils.isEmpty(password) && !TextUtils.isEmpty(passwordConfirm)){
-
             if(password.length() < 7){
                 Toast.makeText(AccountActivity.this, "Your password must be over 7 characters", Toast.LENGTH_LONG).show();
-            }
-            else {
+            } else {
                 if (passwordConfirm.equals(password)) {
                     mProgress.setMessage("Signing Up...");
                     mProgress.show();
@@ -93,7 +87,7 @@ public class AccountActivity extends AppCompatActivity {
 
                                 mProgress.dismiss();
 
-                                Intent loginIntent = new Intent(AccountActivity.this, Login.class);
+                                Intent loginIntent = new Intent(AccountActivity.this, LoginActivity.class);
                                 loginIntent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                                 startActivity(loginIntent);
 
@@ -107,8 +101,7 @@ public class AccountActivity extends AppCompatActivity {
                     Toast.makeText(AccountActivity.this, "Passwords do not match", Toast.LENGTH_LONG).show();
                 }
             }
-        }
-        else {
+        } else {
             Toast.makeText(AccountActivity.this, "Either your username or password is empty", Toast.LENGTH_LONG).show();
         }
     }

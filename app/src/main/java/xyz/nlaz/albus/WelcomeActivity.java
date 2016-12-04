@@ -6,7 +6,6 @@ import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.Button;
-import android.widget.TextView;
 
 /**
  * Created by Nick on 12/3/2016.
@@ -23,7 +22,7 @@ public class WelcomeActivity extends AppCompatActivity {
         mCreateMemoryBtn.setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View view){
-                startActivity(new Intent(WelcomeActivity.this, CreateMomentActivity.class));
+            startActivity(new Intent(WelcomeActivity.this, CreateMomentActivity.class));
             }
         });
     }
