@@ -20,7 +20,7 @@ import com.google.firebase.auth.FirebaseAuth;
  * Created by Nick on 12/1/2016.
  */
 
-public class Login extends AppCompatActivity {
+public class LoginActivity extends AppCompatActivity {
     private EditText mEmailField;
     private EditText mPasswordField;
     private Button mLoginBtn;
@@ -29,8 +29,6 @@ public class Login extends AppCompatActivity {
     private FirebaseAuth mAuth;
 
     private FirebaseAuth.AuthStateListener mAuthListener;
-
-
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -48,27 +46,23 @@ public class Login extends AppCompatActivity {
         mAuthListener = new FirebaseAuth.AuthStateListener(){
           @Override
             public void onAuthStateChanged(@NonNull FirebaseAuth firebaseAuth){
-                if(firebaseAuth.getCurrentUser() != null){
-                    /*TODO Add a if statement here checking if the user has memories currently stored in the database. IF they do, go directly to the ReviewMemories Activity, if not, go to Welcome Activity.*/
-                    startActivity(new Intent(Login.this, WelcomeActivity.class));
-                }
+            if(firebaseAuth.getCurrentUser() != null){
+                /*TODO Add a if statement here checking if the user has memories currently stored in the database. IF they do, go directly to the ReviewMemories Activity, if not, go to Welcome Activity.*/
+                startActivity(new Intent(LoginActivity.this, WelcomeActivity.class));
+            }
           }
         };
 
         mLoginBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-
-                startSignIn();
-
+            startSignIn();
             }
         });
         mSignUpBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-
-                startActivity(new Intent(Login.this, AccountActivity.class));
-
+            startActivity(new Intent(LoginActivity.this, AccountActivity.class));
             }
         });
 
@@ -82,17 +76,16 @@ public class Login extends AppCompatActivity {
         String email = mEmailField.getText().toString();
         String password = mPasswordField.getText().toString();
         if (TextUtils.isEmpty(email) || TextUtils.isEmpty(password)) {
-            Toast.makeText(Login.this, "Either your username or password is empty", Toast.LENGTH_LONG).show();
+            Toast.makeText(LoginActivity.this, "Either your username or password is empty", Toast.LENGTH_LONG).show();
         } else {
             mAuth.signInWithEmailAndPassword(email, password).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
                 @Override
                 public void onComplete(@NonNull Task<AuthResult> task) {
-                    if (!task.isSuccessful()) {
-                        Toast.makeText(Login.this, "Sign In Problem", Toast.LENGTH_LONG).show();
-                    }
-                    if (task.isSuccessful()) {
-                        Toast.makeText(Login.this, "Login Successful", Toast.LENGTH_LONG).show();
-                    }
+                if (task.isSuccessful()) {
+                    Toast.makeText(LoginActivity.this, "Login Successful", Toast.LENGTH_LONG).show();
+                } else {
+                    Toast.makeText(LoginActivity.this, "Sign In Problem", Toast.LENGTH_LONG).show();
+                }
                 }
             });
         }
