@@ -22,16 +22,17 @@
         <activity android:name=".ReviewActivity"/>
         <activity android:name=".CreateMomentActivity" />
         <activity android:name=".AccountActivity"/>
-        <activity android:name=".SettingsOption" />
+        <activity android:name=".SettingsActivity" >
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value=".ReviewActivity" />
+        </activity>
         <activity android:name=".MomentsActivity">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value=".ReviewActivity" />
         </activity>
-
-        <receiver android:name=".Notification_reciever" />
-
-
+        <receiver android:name=".NotificationReciever"/>
     </application>
 
 </manifest>

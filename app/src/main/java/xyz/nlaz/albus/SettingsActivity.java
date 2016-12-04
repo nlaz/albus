@@ -6,12 +6,11 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
-import android.preference.PreferenceManager;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
+import android.widget.Switch;
 import android.widget.Toast;
-import android.widget.ToggleButton;
 
 import java.util.Calendar;
 
@@ -21,12 +20,13 @@ import static xyz.nlaz.albus.R.id.toggleButton;
  * Created by Nick on 11/25/2016.
  */
 
-public class SettingsOption extends AppCompatActivity{
+public class SettingsActivity extends AppCompatActivity{
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState){
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.settingsoption_layout);
-        ToggleButton toggle = (ToggleButton)findViewById(toggleButton);
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        setContentView(R.layout.settings_activity_layout);
+        Switch toggle = (Switch)findViewById(toggleButton);
         SharedPreferences prefers = this.getSharedPreferences("settings", Context.MODE_PRIVATE);
         if (prefers.getBoolean("togglebuttonState",true)){
            toggle.setChecked(true);
@@ -35,16 +35,24 @@ public class SettingsOption extends AppCompatActivity{
             toggle.setChecked(false);
         }
         initNotificationState(toggle);
-        }
+        toggle.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+              changeNotificationState(v);
+            }
+        });
+    }
+
+
     public void changeNotificationState(View view) {
-        boolean checked = ((ToggleButton)view).isChecked();
+        boolean checked = ((Switch)view).isChecked();
         if(checked)
         {
-            // Daily Notificavations
+            // Daily Notifications
             Calendar calender = Calendar.getInstance();
             calender.set(Calendar.HOUR_OF_DAY,07);
             calender.set(Calendar.MINUTE,30);
-            Intent intent = new Intent(getApplicationContext(), Notification_reciever.class);
+            Intent intent = new Intent(getApplicationContext(), NotificationReciever.class);
             PendingIntent pendingIntent = PendingIntent.getBroadcast(getApplicationContext(), 100, intent, PendingIntent.FLAG_UPDATE_CURRENT);
 
             AlarmManager alarmManager = (AlarmManager) getSystemService(ALARM_SERVICE);
@@ -57,7 +65,7 @@ public class SettingsOption extends AppCompatActivity{
         }
         else
         {
-            // Daily Notificavations
+            // Daily Notifications
             Calendar calender = Calendar.getInstance();
             calender.set(Calendar.HOUR_OF_DAY,00);
             calender.set(Calendar.MINUTE,00);
@@ -68,15 +76,15 @@ public class SettingsOption extends AppCompatActivity{
             Toast.makeText(this, "Notifications are Off", Toast.LENGTH_SHORT).show();
         }
     }
-    public void initNotificationState(ToggleButton toggle) {
+    public void initNotificationState(Switch toggle) {
         boolean checked = toggle.isChecked();
         if(checked)
         {
-            // Daily Notificavations
+            // Daily Notifications
             Calendar calender = Calendar.getInstance();
             calender.set(Calendar.HOUR_OF_DAY,07);
             calender.set(Calendar.MINUTE,30);
-            Intent intent = new Intent(getApplicationContext(), Notification_reciever.class);
+            Intent intent = new Intent(getApplicationContext(), NotificationReciever.class);
             PendingIntent pendingIntent = PendingIntent.getBroadcast(getApplicationContext(), 100, intent, PendingIntent.FLAG_UPDATE_CURRENT);
 
             AlarmManager alarmManager = (AlarmManager) getSystemService(ALARM_SERVICE);
@@ -84,7 +92,7 @@ public class SettingsOption extends AppCompatActivity{
         }
         else
         {
-            // Daily Notificavations
+            // Daily Notifications
             Calendar calender = Calendar.getInstance();
             calender.set(Calendar.HOUR_OF_DAY,00);
             calender.set(Calendar.MINUTE,00);

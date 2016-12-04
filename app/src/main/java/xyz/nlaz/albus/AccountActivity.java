@@ -90,7 +90,7 @@ public class AccountActivity extends AppCompatActivity {
                                 mRefName.setValue(name);
                                 Firebase mRefEmail = mRefUser.child("Email");
                                 mRefEmail.setValue(email);
-                                
+
                                 mProgress.dismiss();
 
                                 Intent loginIntent = new Intent(AccountActivity.this, Login.class);
