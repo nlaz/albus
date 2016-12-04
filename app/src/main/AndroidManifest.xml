@@ -12,18 +12,23 @@
         android:label="@string/app_name"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".LoginActivity">
+        <activity android:name=".SplashActivity"
+            android:theme="@style/NoActionBar">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
-
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".ReviewActivity"/>
+        <activity android:name=".LoginActivity">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value=".SplashActivity" />
+        </activity>
+        <activity android:name=".ReviewActivity" />
         <activity android:name=".CreateMomentActivity" />
-        <activity android:name=".AccountActivity"/>
-        <activity android:name=".WelcomeActivity"/>
-        <activity android:name=".SettingsActivity" >
+        <activity android:name=".AccountActivity" />
+        <activity android:name=".WelcomeActivity" />
+        <activity android:name=".SettingsActivity">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value=".ReviewActivity" />
@@ -33,7 +38,9 @@
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value=".ReviewActivity" />
         </activity>
-        <receiver android:name=".NotificationReciever"/>
+
+        <receiver android:name=".NotificationReciever" />
+
     </application>
 
 </manifest>

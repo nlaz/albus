@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/activity_splash"
+    android:background="@color/colorPrimaryBlue"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:padding="40dp"
+    tools:context="xyz.nlaz.albus.SplashActivity">
+
+    <LinearLayout
+        android:orientation="vertical"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_centerInParent="true">
+
+        <ImageView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:src="@mipmap/albus_bolt" />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="40dp"
+            android:text="Supercharge your memory. Daily review your life in moments."
+            android:textColor="@android:color/white"
+            android:textAlignment="center"
+            android:textSize="20sp"/>
+
+        <Button
+            android:id="@+id/signUpButton"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="160dp"
+            android:background="@android:color/white"
+            android:textColor="@color/colorPrimaryBlue"
+            android:text="GET STARTED"/>
+
+        <TextView
+            android:id="@+id/signInPrompt"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="I ALREADY HAVE AN ACCOUNT"
+            android:textSize="18sp"
+            android:layout_marginTop="20dp"
+            android:textAlignment="center"
+            android:textColor="@android:color/white"/>
+    </LinearLayout>
+
+</RelativeLayout>

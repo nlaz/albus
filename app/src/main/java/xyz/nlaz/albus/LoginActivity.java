@@ -1,6 +1,5 @@
 package xyz.nlaz.albus;
 
-import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
@@ -24,34 +23,22 @@ public class LoginActivity extends AppCompatActivity {
     private EditText mEmailField;
     private EditText mPasswordField;
     private Button mLoginBtn;
-    private Button mSignUpBtn;
 
     private FirebaseAuth mAuth;
-
-    private FirebaseAuth.AuthStateListener mAuthListener;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.login);
-
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        getSupportActionBar().setElevation(0);
+        getSupportActionBar().setTitle("Sign In");
+        setContentView(R.layout.login_activity);
         mAuth = FirebaseAuth.getInstance();
 
         mEmailField = (EditText) findViewById(R.id.emailField);
         mPasswordField = (EditText) findViewById(R.id.passwordField);
 
         mLoginBtn = (Button) findViewById(R.id.loginButton);
-        mSignUpBtn = (Button) findViewById(R.id.signUpButton);
-
-        mAuthListener = new FirebaseAuth.AuthStateListener(){
-          @Override
-            public void onAuthStateChanged(@NonNull FirebaseAuth firebaseAuth){
-            if(firebaseAuth.getCurrentUser() != null){
-                /*TODO Add a if statement here checking if the user has memories currently stored in the database. IF they do, go directly to the ReviewMemories Activity, if not, go to Welcome Activity.*/
-                startActivity(new Intent(LoginActivity.this, MomentsActivity.class));
-            }
-          }
-        };
 
         mLoginBtn.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -59,18 +46,6 @@ public class LoginActivity extends AppCompatActivity {
             startSignIn();
             }
         });
-        mSignUpBtn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-            startActivity(new Intent(LoginActivity.this, AccountActivity.class));
-            }
-        });
-
-    }
-    @Override
-    public void onStart(){
-        super.onStart();
-        mAuth.addAuthStateListener(mAuthListener);
     }
     private void startSignIn() {
         String email = mEmailField.getText().toString();
