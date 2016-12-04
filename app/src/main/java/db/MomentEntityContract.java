@@ -10,11 +10,11 @@ public final class MomentEntityContract {
     private MomentEntityContract() {}
 
     public static final String SQL_CREATE_TABLE =
-        "CREATE TABLE " + MomentEntity.TABLE_NAME + " (" +
+        "CREATE TABLE IF NOT EXISTS " + MomentEntity.TABLE_NAME + " (" +
         MomentEntity._ID + " INTEGER PRIMARY KEY, " +
         MomentEntity.COLUMN_TITLE + " TEXT, " +
         MomentEntity.COLUMN_DESCRIPTION + " TEXT, " +
-        MomentEntity.COLUMN_DESCRIPTION + " INTEGER DEFAULT 0 )";
+        MomentEntity.COLUMN_REVIEW_COUNT + " INTEGER DEFAULT 0 )";
 
     public static final String SQL_DELETE_ENTRIES =
         "DROP TABLE IF EXISTS " + MomentEntity.TABLE_NAME;
