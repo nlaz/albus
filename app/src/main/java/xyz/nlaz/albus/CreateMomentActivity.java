@@ -95,6 +95,7 @@ public class CreateMomentActivity extends AppCompatActivity {
                 i.putExtra("moment", moment);
                 setResult(resultCode, i);
                 finish();
+                startActivity(new Intent(CreateMomentActivity.this, ReviewActivity.class));
             }
         }
     };
