@@ -1,35 +1,35 @@
 {
   "project_info": {
-    "project_number": "1073590468710",
-    "firebase_url": "https://albus-7dde2.firebaseio.com",
-    "project_id": "albus-7dde2",
-    "storage_bucket": "albus-7dde2.appspot.com"
+    "project_number": "426773640588",
+    "firebase_url": "https://albus-22d13.firebaseio.com",
+    "project_id": "albus-22d13",
+    "storage_bucket": "albus-22d13.appspot.com"
   },
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:1073590468710:android:742787e71b545f33",
+        "mobilesdk_app_id": "1:426773640588:android:742787e71b545f33",
         "android_client_info": {
           "package_name": "xyz.nlaz.albus"
         }
       },
       "oauth_client": [
         {
-          "client_id": "1073590468710-8kt8su07gk8o9fngrulqquq9r95ioab7.apps.googleusercontent.com",
+          "client_id": "426773640588-5nuvg3fpmj2ulbfdak80dbie4g84u1to.apps.googleusercontent.com",
           "client_type": 1,
           "android_info": {
             "package_name": "xyz.nlaz.albus",
-            "certificate_hash": "EDFB9C2AFCE5144DAC0C4CE91673B7511B9934D5"
+            "certificate_hash": "3865D11BA78247CD03F7271237B7F602CA07665E"
           }
         },
         {
-          "client_id": "1073590468710-66rlg40cde8199ngtr16ogr26ds69nod.apps.googleusercontent.com",
+          "client_id": "426773640588-cjkur2kdtkg879kfqab3dqhmn7riomst.apps.googleusercontent.com",
           "client_type": 3
         }
       ],
       "api_key": [
         {
-          "current_key": "AIzaSyDs5l7wGkAO6cmIdOtrofeCn23WeiVGvg4"
+          "current_key": "AIzaSyAYbwWrZpfbMiNAYES3jsjvKmpTBIH1IRs"
         }
       ],
       "services": {
@@ -40,7 +40,7 @@
           "status": 2,
           "other_platform_oauth_client": [
             {
-              "client_id": "1073590468710-66rlg40cde8199ngtr16ogr26ds69nod.apps.googleusercontent.com",
+              "client_id": "426773640588-cjkur2kdtkg879kfqab3dqhmn7riomst.apps.googleusercontent.com",
               "client_type": 3
             }
           ]

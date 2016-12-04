@@ -15,6 +15,8 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.firebase.client.Firebase;
+
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Collections;
@@ -45,7 +47,6 @@ public class ReviewActivity extends AppCompatActivity {
     private TextView progressText;
     private int itemTotal;
     private int itemCount;
-
     private SQLiteHelper dbHelper;
     private static int REVIEW_LIMIT = 5;
     private static boolean DEBUG = true;
@@ -54,6 +55,11 @@ public class ReviewActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.review_activity);
+//        Firebase.setAndroidContext(this);
+//        Firebase mRef = new Firebase ("https://albus-22d13.firebaseio.com/");
+//
+//        Firebase mRefChild = mRef.child("Name");
+//        mRefChild.setValue("Nick");
 
         titleView = (TextView) findViewById(R.id.item_title);
         notesView = (TextView) findViewById(R.id.item_notes);

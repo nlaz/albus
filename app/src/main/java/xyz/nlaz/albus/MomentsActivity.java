@@ -19,6 +19,8 @@ import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.firebase.client.Firebase;
+
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
@@ -50,7 +52,6 @@ public class MomentsActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         setContentView(R.layout.moments_activity);
-
         listView = (ListView) findViewById(R.id.listview);
         emptyView = (TextView) findViewById(R.id.emptyView);
 
@@ -83,6 +84,7 @@ public class MomentsActivity extends AppCompatActivity {
                 finish();
                 break;
             case R.id.settings:
+
                 Toast.makeText(this, "Settings selected", Toast.LENGTH_SHORT).show();
                 Intent settingsIntent = new Intent(this, SettingsOption.class);
                 startActivityForResult(settingsIntent, REQUEST_CODE_NEW);
