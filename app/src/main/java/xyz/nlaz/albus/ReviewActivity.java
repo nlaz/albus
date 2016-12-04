@@ -15,8 +15,6 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.firebase.client.Firebase;
-
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Collections;
@@ -53,11 +51,6 @@ public class ReviewActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.review_activity);
-//        Firebase.setAndroidContext(this);
-//        Firebase mRef = new Firebase ("https://albus-22d13.firebaseio.com/");
-//
-//        Firebase mRefChild = mRef.child("Name");
-//        mRefChild.setValue("Nick");
 
         titleView = (TextView) findViewById(R.id.item_title);
         notesView = (TextView) findViewById(R.id.item_notes);
@@ -125,15 +118,17 @@ public class ReviewActivity extends AppCompatActivity {
     }
 
     List<Moment> generateDailyStack( ArrayList<Moment> allMoments) {
-        Collections.sort(allMoments, new Comparator<Moment>() {
-            @Override
-            public int compare(Moment lhs, Moment rhs) {
-                return lhs.getReviewCount().compareTo(rhs.getReviewCount());
-            }
-        });
+        Collections.sort(allMoments, momentComparator);
         saveTodayDate();
         return allMoments.subList(0, Math.min(allMoments.size(), REVIEW_LIMIT));
     }
+
+    private Comparator<Moment> momentComparator = new Comparator<Moment>() {
+        @Override
+        public int compare(Moment lhs, Moment rhs) {
+            return lhs.getReviewCount().compareTo(rhs.getReviewCount());
+        }
+    };
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {

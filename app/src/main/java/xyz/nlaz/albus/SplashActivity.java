@@ -42,7 +42,8 @@ public class SplashActivity extends AppCompatActivity {
         public void onAuthStateChanged(@NonNull FirebaseAuth firebaseAuth){
             if(firebaseAuth.getCurrentUser() != null) {
                 /*TODO Add a if statement here checking if the user has memories currently stored in the database. IF they do, go directly to the ReviewMemories Activity, if not, go to Welcome Activity.*/
-                startActivity(new Intent(SplashActivity.this, MomentsActivity.class));
+                startActivity(new Intent(SplashActivity.this, ReviewActivity.class));
+                finish();
             }
         }
     };
