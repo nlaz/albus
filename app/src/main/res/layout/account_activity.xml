@@ -1,0 +1,110 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/activity_account"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:padding="40dp"
+    tools:context="xyz.nlaz.albus.AccountActivity">
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Aww! We love you already."
+        android:textAlignment="center"
+        android:textSize="16sp"
+        android:textColor="@color/colorGray"
+        android:layout_marginBottom="20dp"/>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="NAME"
+        android:textSize="12sp"
+        android:textStyle="bold"
+        android:textColor="@color/colorDarkGray"/>
+
+    <EditText
+        android:id="@+id/nameRegister"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:inputType="textPersonName"
+        android:textSize="18sp"
+        android:hint="What should we call you?"
+        android:padding="15dp"
+        android:background="@android:color/white"
+        tools:ignore="HardcodedText"/>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        android:text="EMAIL"
+        android:textSize="12sp"
+        android:textStyle="bold"
+        android:textColor="@color/colorDarkGray"/>
+
+    <EditText
+        android:id="@+id/emailRegister"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:inputType="textEmailAddress"
+        android:textSize="18sp"
+        android:hint="you@your-domain.com"
+        android:padding="15dp"
+        android:background="@android:color/white"
+        tools:ignore="HardcodedText"/>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        android:text="PASSWORD"
+        android:textSize="12sp"
+        android:textStyle="bold"
+        android:textColor="@color/colorDarkGray"/>
+
+    <EditText
+        android:id="@+id/passwordRegister"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:inputType="textPassword"
+        android:textSize="18sp"
+        android:fontFamily="sans-serif"
+        android:hint="Shh! This is a secret"
+        android:padding="15dp"
+        android:background="@android:color/white"
+        tools:ignore="HardcodedText"/>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        android:text="CONFIRM PASSWORD"
+        android:textSize="12sp"
+        android:textStyle="bold"
+        android:textColor="@color/colorDarkGray"/>
+
+    <EditText
+        android:id="@+id/passwordRegisterConfirmation"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:inputType="textPassword"
+        android:textSize="18sp"
+        android:fontFamily="sans-serif"
+        android:hint="This is your password again"
+        android:padding="15dp"
+        android:background="@android:color/white"
+        tools:ignore="HardcodedText"/>
+
+    <Button
+        android:id="@+id/registerButton"
+        android:text="Register"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/colorGreen"
+        android:textColor="@color/colorDarkGreen"
+        android:layout_marginTop="30dp" />
+
+</LinearLayout>

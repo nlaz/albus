@@ -35,7 +35,10 @@ public class AccountActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_account);
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        getSupportActionBar().setElevation(0);
+        getSupportActionBar().setTitle("Sign Up");
+        setContentView(R.layout.account_activity);
 
         mNameField = (EditText) findViewById(R.id.nameRegister);
         mPasswordField = (EditText) findViewById(R.id.passwordRegister);
@@ -87,7 +90,7 @@ public class AccountActivity extends AppCompatActivity {
 
                                 mProgress.dismiss();
 
-                                Intent loginIntent = new Intent(AccountActivity.this, LoginActivity.class);
+                                Intent loginIntent = new Intent(AccountActivity.this, SplashActivity.class);
                                 loginIntent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                                 startActivity(loginIntent);
 

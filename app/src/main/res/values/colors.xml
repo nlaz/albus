@@ -5,7 +5,9 @@
     <color name="colorPrimaryDark">#303F9F</color>
     <color name="colorAccent">#FF4081</color>
     <color name="colorPrimaryBlue">#00ACF2</color>
-    <color name="colorLightGray">#F1F1F1</color>
+    <color name="colorGray">#818181</color>
+    <color name="colorLightGray">#F3F3F3</color>
+    <color name="colorDarkGray">#5F5F5F</color>
     <color name="colorGreen">#74ecaa</color>
     <color name="colorDarkGreen">#31AB6B</color>
 </resources>
