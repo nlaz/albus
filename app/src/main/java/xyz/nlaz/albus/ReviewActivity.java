@@ -15,6 +15,8 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.google.firebase.auth.FirebaseAuth;
+
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Collections;
@@ -23,6 +25,8 @@ import java.util.List;
 
 import db.SQLiteHelper;
 import models.Moment;
+
+import static xyz.nlaz.albus.MomentsActivity.REQUEST_CODE_NEW;
 
 /**
  * ReviewActivity - Controls the logic for the Review
@@ -47,11 +51,13 @@ public class ReviewActivity extends AppCompatActivity {
     private static int REVIEW_LIMIT = 5;
     private static boolean DEBUG = true;
 
+    private FirebaseAuth mAuth;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.review_activity);
-
+        mAuth = FirebaseAuth.getInstance();
         titleView = (TextView) findViewById(R.id.item_title);
         notesView = (TextView) findViewById(R.id.item_notes);
         nextButton = (Button) findViewById(R.id.next_button);
@@ -61,7 +67,6 @@ public class ReviewActivity extends AppCompatActivity {
         progressText = (TextView) findViewById(R.id.review_progress);
 
         objects = new ArrayList<>();
-
         SharedPreferences prefs = this.getPreferences(Context.MODE_PRIVATE);
         int lastSave = prefs.getInt("lastUpdate", -1);
         Calendar calendar = Calendar.getInstance();
@@ -149,6 +154,12 @@ public class ReviewActivity extends AppCompatActivity {
                 Toast.makeText(this, "Settings selected", Toast.LENGTH_SHORT).show();
                 Intent settingsIntent = new Intent(this, SettingsActivity.class);
                 startActivity(settingsIntent);
+                break;
+            case R.id.logout:
+                mAuth.signOut();
+                Toast.makeText(this, "Logged Out", Toast.LENGTH_SHORT).show();
+                Intent logout = new Intent(this, LoginActivity.class);
+                startActivityForResult(logout, REQUEST_CODE_NEW);
                 break;
         }
         return true;

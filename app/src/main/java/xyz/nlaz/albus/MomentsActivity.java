@@ -17,6 +17,8 @@ import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.google.firebase.auth.FirebaseAuth;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -36,7 +38,7 @@ public class MomentsActivity extends AppCompatActivity {
     private ViewAdapter adapter;
     private TextView emptyView;
     private SQLiteHelper dbHelper;
-
+    private FirebaseAuth mAuth;
     public static final int REQUEST_CODE_EDIT = 1;
     public static final int REQUEST_CODE_NEW = 2;
     public static final int RESULT_CODE_DELETE = 3;
@@ -48,12 +50,12 @@ public class MomentsActivity extends AppCompatActivity {
         setContentView(R.layout.moments_activity);
         listView = (ListView) findViewById(R.id.listview);
         emptyView = (TextView) findViewById(R.id.emptyView);
-
+        mAuth = FirebaseAuth.getInstance();
         listView.setEmptyView(emptyView);
 
         dbHelper = new SQLiteHelper(this);
         objects = dbHelper.getAllMoments();
-
+        //Read in Firebase Moments Here
         adapter = new ViewAdapter(this, R.layout.moments_item, objects);
         listView.setAdapter(adapter);
     }
@@ -81,6 +83,12 @@ public class MomentsActivity extends AppCompatActivity {
                 Toast.makeText(this, "Settings selected", Toast.LENGTH_SHORT).show();
                 Intent settingsIntent = new Intent(this, SettingsActivity.class);
                 startActivityForResult(settingsIntent, REQUEST_CODE_NEW);
+                break;
+            case R.id.logout:
+                mAuth.signOut();
+                Toast.makeText(this, "Logged Out", Toast.LENGTH_SHORT).show();
+                Intent logout = new Intent(this, LoginActivity.class);
+                startActivityForResult(logout, REQUEST_CODE_NEW);
                 break;
         }
         return true;
@@ -128,6 +136,7 @@ public class MomentsActivity extends AppCompatActivity {
                 return;
             }
         }
+        //Edit Moment in Firebase here
     }
 
     private void removeMomentInList(Moment m) {
@@ -138,6 +147,7 @@ public class MomentsActivity extends AppCompatActivity {
                 return;
             }
         }
+        //delete Moment in Firebase here
     }
 
     /* Array Adapter */

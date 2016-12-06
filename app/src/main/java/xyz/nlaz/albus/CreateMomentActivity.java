@@ -12,6 +12,8 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
+import com.google.firebase.auth.FirebaseAuth;
+
 import models.Moment;
 
 import static xyz.nlaz.albus.MomentsActivity.REQUEST_CODE_NEW;
@@ -29,7 +31,7 @@ public class CreateMomentActivity extends AppCompatActivity {
     private Button saveButton;
     private boolean isEditView = false;
     private Moment moment;
-
+    private FirebaseAuth mAuth;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -37,7 +39,7 @@ public class CreateMomentActivity extends AppCompatActivity {
 
         Bundle bundle = getIntent().getExtras();
         moment = new Moment();
-
+        mAuth = FirebaseAuth.getInstance();
         titleInput = (EditText) findViewById(R.id.title);
         descriptionInput = (EditText) findViewById(R.id.description);
         saveButton = (Button) findViewById(R.id.button);
@@ -75,6 +77,12 @@ public class CreateMomentActivity extends AppCompatActivity {
                 Toast.makeText(this, "Settings selected", Toast.LENGTH_SHORT).show();
                 Intent settingsIntent = new Intent(this, SettingsActivity.class);
                 startActivityForResult(settingsIntent, REQUEST_CODE_NEW);
+                break;
+            case R.id.logout:
+                mAuth.signOut();
+                Toast.makeText(this, "Logged Out", Toast.LENGTH_SHORT).show();
+                Intent logout = new Intent(this, LoginActivity.class);
+                startActivityForResult(logout, REQUEST_CODE_NEW);
                 break;
         }
         return true;
