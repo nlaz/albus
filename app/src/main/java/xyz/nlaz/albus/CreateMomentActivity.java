@@ -12,7 +12,10 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
+import com.firebase.client.Firebase;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
 
 import models.Moment;
 
@@ -32,14 +35,22 @@ public class CreateMomentActivity extends AppCompatActivity {
     private boolean isEditView = false;
     private Moment moment;
     private FirebaseAuth mAuth;
+    private Firebase mRef;
+    private DatabaseReference mDatabase;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.create_activity);
 
         Bundle bundle = getIntent().getExtras();
+
+        Firebase.setAndroidContext(this);
         moment = new Moment();
         mAuth = FirebaseAuth.getInstance();
+
+        mRef = new Firebase("https://albus-22d13.firebaseio.com/Users/");
+
         titleInput = (EditText) findViewById(R.id.title);
         descriptionInput = (EditText) findViewById(R.id.description);
         saveButton = (Button) findViewById(R.id.button);
@@ -81,7 +92,7 @@ public class CreateMomentActivity extends AppCompatActivity {
             case R.id.logout:
                 mAuth.signOut();
                 Toast.makeText(this, "Logged Out", Toast.LENGTH_SHORT).show();
-                Intent logout = new Intent(this, LoginActivity.class);
+                Intent logout = new Intent(this, SplashActivity.class);
                 startActivityForResult(logout, REQUEST_CODE_NEW);
                 break;
         }
@@ -89,6 +100,7 @@ public class CreateMomentActivity extends AppCompatActivity {
     }
 
     /* Click Listener */
+
     private View.OnClickListener saveListener = new View.OnClickListener() {
         @Override
         public void onClick(View v) {
@@ -100,8 +112,21 @@ public class CreateMomentActivity extends AppCompatActivity {
                 int resultCode = isEditView ? MomentsActivity.RESULT_CODE_UPDATE : Activity.RESULT_OK;
                 moment.setTitle(titleInput.getText().toString());
                 moment.setDescription(descriptionInput.getText().toString());
+                String user_id = mAuth.getCurrentUser().getUid();
+                Firebase mRefUser = mRef.child(user_id);
+                Firebase index = mRefUser.child("Moments");
+                //figure out how many moments are under a specific user
+                mDatabase = FirebaseDatabase.getInstance().getReference();
+                String key = mDatabase.child("/Users/" + user_id + "/Moments").push().getKey();
+                Firebase moments = index.child(key);
+                Moments newMoment = new Moments(titleInput.getText().toString(),descriptionInput.getText().toString(),0);
+                index.child(key).setValue(newMoment);
+
                 i.putExtra("moment", moment);
                 setResult(resultCode, i);
+                DatabaseReference myRef1 = FirebaseDatabase.getInstance().getReference(); //Getting root reference
+                DatabaseReference myRef = myRef1.child("message"); //Write your child reference if any
+                myRef.setValue("Hello, World!");
                 finish();
                 startActivity(new Intent(CreateMomentActivity.this, ReviewActivity.class));
             }

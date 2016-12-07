@@ -29,7 +29,6 @@ public class AccountActivity extends AppCompatActivity {
     //Firebase stuffs
     private FirebaseAuth mAuth;
     private ProgressDialog mProgress;
-    private DatabaseReference mDatabase;
     private Firebase mRef;
 
     @Override
@@ -51,7 +50,7 @@ public class AccountActivity extends AppCompatActivity {
         //More Firebase stuff
         mProgress = new ProgressDialog(this);
         mAuth = FirebaseAuth.getInstance();
-        mDatabase = FirebaseDatabase.getInstance().getReference().child("Users");
+
         mRegisterBtn.setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View view){
@@ -79,9 +78,7 @@ public class AccountActivity extends AppCompatActivity {
                             if (task.isSuccessful()) {
 
                                 String user_id = mAuth.getCurrentUser().getUid();
-                                DatabaseReference current_user_db = mDatabase.child(user_id);
-                                current_user_db.child("name").setValue(name);
-                                current_user_db.child("image").setValue(email);
+
                                 Firebase mRefUser = mRef.child(user_id);
                                 Firebase mRefName = mRefUser.child("Name");
                                 mRefName.setValue(name);
