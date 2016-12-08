@@ -17,8 +17,6 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.firebase.client.Firebase;
-import com.google.api.client.util.Data;
-import com.google.common.primitives.Ints;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -87,43 +85,31 @@ public class ReviewActivity extends AppCompatActivity {
             Toast.makeText(this, "You've already reviewed today. New items tomorrow!", Toast.LENGTH_SHORT).show();
         } else {
             /* Fetch memory items from db */
-            dbHelper = new SQLiteHelper(this);
-            objects = generateDailyStack( dbHelper.getAllMoments() );
-        }
 
-        itemCount = 0;
-        itemTotal = objects.size();
+            //to read the Moments from the Database, copy this code
+            final String user_id = mAuth.getCurrentUser().getUid();
+            Firebase.setAndroidContext(this);
+            DatabaseReference mRef = FirebaseDatabase.getInstance().getReference("Users").child(user_id).child("Moments");
+            mRef.addValueEventListener(firebaseListener);
+
+//            dbHelper = new SQLiteHelper(this);
+//            objects = generateDailyStack( dbHelper.getAllMoments() );
+        }
 
         nextButton.setOnClickListener(nextListener);
         cardView.setOnClickListener(cardListener);
 
-        renderView();
-
-        //to read the Moments from the Database, copy this code
-        final String user_id = mAuth.getCurrentUser().getUid();
-
-        Firebase.setAndroidContext(this);
-        DatabaseReference mRef = FirebaseDatabase.getInstance().getReference("Users").child(user_id).child("Moments");
-        mRef.addValueEventListener(new ValueEventListener() {
-            @Override
-            public void onDataChange(DataSnapshot dataSnapshot) {
-                Log.e("Count", ""+dataSnapshot.getChildrenCount());
-                for(DataSnapshot mydata : dataSnapshot.getChildren()){
-                    Moments m = mydata.getValue(Moments.class);
-                    Log.e("ReviewCount", ""+m.getReviewCount());
-                    Log.e("Title", ""+m.getTitle());
-                    Log.e("Description", ""+m.getDescription());
-                }
-            }
-
-            @Override
-            public void onCancelled(DatabaseError databaseError) {
-
-            }
-        });
-
+        resetView();
     }
 
+    protected void resetView() {
+        itemCount = 0;
+        itemTotal = objects.size();
+        cardView.setVisibility(View.VISIBLE);
+        reportView.setVisibility(View.GONE);
+        nextButton.setVisibility(View.VISIBLE);
+        renderView();
+    }
     /**
      * renderView - Updates card view states depending
      * on whether there are any objects left to review
@@ -132,10 +118,9 @@ public class ReviewActivity extends AppCompatActivity {
         progressText.setText(itemCount + "/" + itemTotal);
         if ( objects.isEmpty() ) {
             cardView.setVisibility(View.GONE);
+            nextButton.setVisibility(View.GONE);
             reportView.setVisibility(View.VISIBLE);
             reportText.setText(String.format("Yay! You reviewed %d moments today.", itemTotal));
-
-            nextButton.setVisibility(View.GONE);
         } else {
             Moment item = objects.remove(0);
             titleView.setText(item.getTitle());
@@ -145,7 +130,8 @@ public class ReviewActivity extends AppCompatActivity {
                 notesView.setText(item.getDescription());
             }
             item.incrementReviewCount();
-            dbHelper.updateMoment(item.getId(), item);
+            //TODO Increment review count in firebase
+//            dbHelper.updateMoment(item.getId(), item);
         }
     }
 
@@ -223,6 +209,28 @@ public class ReviewActivity extends AppCompatActivity {
             if (notesView.getText().length() > 0) {
                 toggleView(notesView);
             }
+        }
+    };
+
+    /* Firebase Listeners */
+    private ValueEventListener firebaseListener = new ValueEventListener() {
+        @Override
+        public void onDataChange(DataSnapshot dataSnapshot) {
+            objects = new ArrayList<Moment>();
+            Log.d("Count", ""+dataSnapshot.getChildrenCount());
+            for(DataSnapshot mydata : dataSnapshot.getChildren()){
+                Moment m = mydata.getValue(Moment.class);
+                Log.d("ReviewCount", m.getReviewCount().toString());
+                Log.d("Title", m.getTitle());
+                Log.d("Description", m.getDescription());
+                objects.add(m);
+            }
+            resetView();
+        }
+
+        @Override
+        public void onCancelled(DatabaseError databaseError) {
+            Log.e("Database Error", databaseError.toString());
         }
     };
 }
