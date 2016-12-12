@@ -6,6 +6,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -18,11 +19,15 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
 import java.util.List;
 
-import db.SQLiteHelper;
 import models.Moment;
 
 /**
@@ -33,12 +38,14 @@ import models.Moment;
 
 public class MomentsActivity extends AppCompatActivity {
 
-    private ListView listView;
     private ArrayList<Moment> objects;
     private ViewAdapter adapter;
+    private ListView listView;
     private TextView emptyView;
-    private SQLiteHelper dbHelper;
+
     private FirebaseAuth mAuth;
+    private DatabaseReference mRef;
+
     public static final int REQUEST_CODE_EDIT = 1;
     public static final int REQUEST_CODE_NEW = 2;
     public static final int RESULT_CODE_DELETE = 3;
@@ -48,14 +55,17 @@ public class MomentsActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.moments_activity);
+        objects = new ArrayList<>();
+
         listView = (ListView) findViewById(R.id.listview);
         emptyView = (TextView) findViewById(R.id.emptyView);
         mAuth = FirebaseAuth.getInstance();
         listView.setEmptyView(emptyView);
 
-        dbHelper = new SQLiteHelper(this);
-        objects = dbHelper.getAllMoments();
-        //Read in Firebase Moments Here
+        final String user_id = mAuth.getCurrentUser().getUid();
+        mRef = FirebaseDatabase.getInstance().getReference("Users").child(user_id).child("Moments");
+        mRef.addValueEventListener(valueEventListener);
+
         adapter = new ViewAdapter(this, R.layout.moments_item, objects);
         listView.setAdapter(adapter);
     }
@@ -100,54 +110,34 @@ public class MomentsActivity extends AppCompatActivity {
         switch (requestCode) {
             case REQUEST_CODE_NEW:
                 if (resultCode == Activity.RESULT_OK) {
-                    Moment newMoment = data.getParcelableExtra("moment");
-                    int id = dbHelper.insertMoment(newMoment);
-                    newMoment.setId(id);
-                    objects.add(newMoment);
-                    Toast.makeText(this, "New Item: " + newMoment.getId(), Toast.LENGTH_SHORT).show();
-                    adapter.notifyDataSetChanged();
+                    // New Moment Created
+                    Moment moment = data.getParcelableExtra("moment");
+                    String key = mRef.push().getKey();
+                    moment.setKey(key);
+                    mRef.child(key).setValue(moment);
+
+                    Toast.makeText(this, "New Item: " + moment.getKey(), Toast.LENGTH_SHORT).show();
                 }
                 break;
             case REQUEST_CODE_EDIT:
                 if (resultCode == RESULT_CODE_UPDATE) {
+                    // Existing Moment Edited
+                    Moment moment = data.getParcelableExtra("moment");
+                    mRef.child(moment.getKey()).setValue(moment);
+
                     Toast.makeText(this, "Update Item", Toast.LENGTH_SHORT).show();
-                    Moment moment = data.getParcelableExtra("moment");
-                    dbHelper.updateMoment(moment.getId(), moment);
-                    updateMomentInList(moment);
                 } else if (resultCode == RESULT_CODE_DELETE) {
+                    // Existing Moment Deleted
                     Moment moment = data.getParcelableExtra("moment");
-                    Toast.makeText(this, "Delete Item: " + moment.getId(), Toast.LENGTH_SHORT).show();
-                    dbHelper.deleteMomentById(moment.getId());
-                    removeMomentInList(moment);
+                    mRef.child(moment.getKey()).removeValue();
+
+                    Toast.makeText(this, "Delete Item: " + moment.getKey(), Toast.LENGTH_SHORT).show();
                 }
                 break;
             default:
                 Toast.makeText(this, "I'm not sure what to do :(", Toast.LENGTH_SHORT).show();
                 break;
         }
-    }
-
-    /* Helper Methods */
-    private void updateMomentInList(Moment m) {
-        for (int i = 0; i < objects.size(); i++) {
-            if (objects.get(i).getId().equals(m.getId())) {
-                objects.set(i, m);
-                adapter.notifyDataSetChanged();
-                return;
-            }
-        }
-        //Edit Moment in Firebase here
-    }
-
-    private void removeMomentInList(Moment m) {
-        for (Moment moment: objects) {
-            if (moment.getId().equals(m.getId())) {
-                objects.remove(moment);
-                adapter.notifyDataSetChanged();
-                return;
-            }
-        }
-        //delete Moment in Firebase here
     }
 
     /* Array Adapter */
@@ -159,7 +149,6 @@ public class MomentsActivity extends AppCompatActivity {
 
         ViewAdapter(Context context, int resource, ArrayList<Moment> objects) {
             super(context, resource, objects);
-
             this.context = context;
             this.resource = resource;
             this.objects = objects;
@@ -190,4 +179,23 @@ public class MomentsActivity extends AppCompatActivity {
            }
        };
     }
+
+    /* Firebase Listener */
+    private ValueEventListener valueEventListener = new ValueEventListener() {
+        @Override
+        public void onDataChange(DataSnapshot dataSnapshot) {
+            objects.clear();
+            for(DataSnapshot mydata : dataSnapshot.getChildren()){
+                Moment m = mydata.getValue(Moment.class);
+                m.setKey(mydata.getKey());
+                objects.add(m);
+            }
+            adapter.notifyDataSetChanged();
+        }
+
+        @Override
+        public void onCancelled(DatabaseError databaseError) {
+            Log.e("DatabaseError", databaseError.toString());
+        }
+    };
 }

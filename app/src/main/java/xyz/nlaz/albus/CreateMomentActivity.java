@@ -15,7 +15,6 @@ import android.widget.Toast;
 import com.firebase.client.Firebase;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DatabaseReference;
-import com.google.firebase.database.FirebaseDatabase;
 
 import models.Moment;
 
@@ -58,7 +57,7 @@ public class CreateMomentActivity extends AppCompatActivity {
         if (bundle != null){
             isEditView = true;
             moment = bundle.getParcelable("moment");
-            Toast.makeText(this, Integer.toString( moment.getId() ), Toast.LENGTH_SHORT).show();
+            Toast.makeText(this, moment.getKey(), Toast.LENGTH_SHORT).show();
             titleInput.setText(moment.getTitle());
             descriptionInput.setText(moment.getDescription());
         }
@@ -108,27 +107,14 @@ public class CreateMomentActivity extends AppCompatActivity {
                 Toast.makeText(v.getContext(), "You must enter a title", Toast.LENGTH_SHORT).show();
                 return;
             } else {
-                Intent i = new Intent();
+                Intent i = new Intent(CreateMomentActivity.this, ReviewActivity.class);
                 int resultCode = isEditView ? MomentsActivity.RESULT_CODE_UPDATE : Activity.RESULT_OK;
-                moment.setTitle(titleInput.getText().toString());
-                moment.setDescription(descriptionInput.getText().toString());
-                String user_id = mAuth.getCurrentUser().getUid();
-                Firebase mRefUser = mRef.child(user_id);
-                Firebase index = mRefUser.child("Moments");
-                //figure out how many moments are under a specific user
-                mDatabase = FirebaseDatabase.getInstance().getReference();
-                String key = mDatabase.child("/Users/" + user_id + "/Moments").push().getKey();
-                Firebase moments = index.child(key);
-                Moments newMoment = new Moments(titleInput.getText().toString(),descriptionInput.getText().toString(),0);
-                index.child(key).setValue(newMoment);
+                moment.setTitle( titleInput.getText().toString() );
+                moment.setDescription( descriptionInput.getText().toString() );
 
                 i.putExtra("moment", moment);
                 setResult(resultCode, i);
-                DatabaseReference myRef1 = FirebaseDatabase.getInstance().getReference(); //Getting root reference
-                DatabaseReference myRef = myRef1.child("message"); //Write your child reference if any
-                myRef.setValue("Hello, World!");
                 finish();
-                startActivity(new Intent(CreateMomentActivity.this, ReviewActivity.class));
             }
         }
     };

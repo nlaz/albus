@@ -220,9 +220,7 @@ public class ReviewActivity extends AppCompatActivity {
             Log.d("Count", ""+dataSnapshot.getChildrenCount());
             for(DataSnapshot mydata : dataSnapshot.getChildren()){
                 Moment m = mydata.getValue(Moment.class);
-                Log.d("ReviewCount", m.getReviewCount().toString());
-                Log.d("Title", m.getTitle());
-                Log.d("Description", m.getDescription());
+                m.setKey(mydata.getKey());
                 objects.add(m);
             }
             resetView();
