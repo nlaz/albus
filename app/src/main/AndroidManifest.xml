@@ -31,7 +31,6 @@
         </activity>
         <activity android:name=".ReviewActivity" />
         <activity android:name=".CreateMomentActivity" />
-        <activity android:name=".WelcomeActivity" />
         <activity android:name=".SettingsActivity">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
