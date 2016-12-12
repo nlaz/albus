@@ -29,7 +29,7 @@
             android:layout_height="250dp"
             android:layout_centerInParent="true"
             android:translationZ="2dp"
-            android:background="#ffffff">
+            android:background="@drawable/white_field">
 
             <LinearLayout
                 android:layout_width="wrap_content"
@@ -67,7 +67,8 @@
             android:id="@+id/next_button"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:background="@color/colorPrimaryBlue"
+            android:background="@drawable/blue_button"
+            android:translationZ="5dp"
             android:textColor="@android:color/white"
             android:text="Next"
             android:layout_alignParentBottom="true"/>

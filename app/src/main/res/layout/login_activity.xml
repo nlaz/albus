@@ -11,7 +11,7 @@
         android:orientation="vertical"
         android:layout_height="wrap_content"
         android:layout_marginTop="30dp"
-        android:background="@android:color/white">
+        android:background="@drawable/white_field">
 
         <EditText
             android:id="@+id/emailField"
@@ -45,7 +45,7 @@
         android:text="Sign In"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="@color/colorGreen"
+        android:background="@drawable/green_button"
         android:textColor="@color/colorDarkGreen"
         android:translationZ="1dp"
         android:layout_marginTop="20dp" />

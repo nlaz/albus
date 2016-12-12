@@ -33,7 +33,7 @@
         android:textSize="18sp"
         android:hint="What should we call you?"
         android:padding="15dp"
-        android:background="@android:color/white"
+        android:background="@drawable/white_field"
         tools:ignore="HardcodedText"/>
 
     <TextView
@@ -53,7 +53,7 @@
         android:textSize="18sp"
         android:hint="you@your-domain.com"
         android:padding="15dp"
-        android:background="@android:color/white"
+        android:background="@drawable/white_field"
         tools:ignore="HardcodedText"/>
 
     <TextView
@@ -74,7 +74,7 @@
         android:fontFamily="sans-serif"
         android:hint="Shh! This is a secret"
         android:padding="15dp"
-        android:background="@android:color/white"
+        android:background="@drawable/white_field"
         tools:ignore="HardcodedText"/>
 
     <TextView
@@ -95,7 +95,7 @@
         android:fontFamily="sans-serif"
         android:hint="This is your password again"
         android:padding="15dp"
-        android:background="@android:color/white"
+        android:background="@drawable/white_field"
         tools:ignore="HardcodedText"/>
 
     <Button
@@ -103,7 +103,7 @@
         android:text="Register"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="@color/colorGreen"
+        android:background="@drawable/green_button"
         android:textColor="@color/colorDarkGreen"
         android:layout_marginTop="30dp" />
 
