@@ -12,6 +12,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.LinearLayout;
+import android.widget.ProgressBar;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -30,7 +31,6 @@ import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
 
-import db.SQLiteHelper;
 import models.Moment;
 
 import static xyz.nlaz.albus.MomentsActivity.REQUEST_CODE_NEW;
@@ -51,17 +51,18 @@ public class ReviewActivity extends AppCompatActivity {
     private RelativeLayout cardView;
     private LinearLayout reportView;
     private TextView reportText;
-    private TextView progressText;
+    private ProgressBar progressBar;
+
     private int itemTotal;
     private int itemCount;
-    private SQLiteHelper dbHelper;
     private static int REVIEW_LIMIT = 5;
     private static boolean DEBUG = true;
 
     //to read the moments from firebase copy this code
     private FirebaseDatabase mDatabase;
-    private FirebaseAuth mAuth;
     private DatabaseReference mRef;
+    private FirebaseAuth mAuth;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -73,7 +74,7 @@ public class ReviewActivity extends AppCompatActivity {
         cardView = (RelativeLayout) findViewById(R.id.item_card);
         reportView = (LinearLayout) findViewById(R.id.report_view);
         reportText = (TextView) findViewById(R.id.report_text);
-        progressText = (TextView) findViewById(R.id.review_progress);
+        progressBar = (ProgressBar) findViewById(R.id.progress_bar);
 
         objects = new ArrayList<>();
         SharedPreferences prefs = this.getPreferences(Context.MODE_PRIVATE);
@@ -85,15 +86,10 @@ public class ReviewActivity extends AppCompatActivity {
             Toast.makeText(this, "You've already reviewed today. New items tomorrow!", Toast.LENGTH_SHORT).show();
         } else {
             /* Fetch memory items from db */
-
-            //to read the Moments from the Database, copy this code
             final String user_id = mAuth.getCurrentUser().getUid();
             Firebase.setAndroidContext(this);
             DatabaseReference mRef = FirebaseDatabase.getInstance().getReference("Users").child(user_id).child("Moments");
             mRef.addValueEventListener(firebaseListener);
-
-//            dbHelper = new SQLiteHelper(this);
-//            objects = generateDailyStack( dbHelper.getAllMoments() );
         }
 
         nextButton.setOnClickListener(nextListener);
@@ -115,11 +111,16 @@ public class ReviewActivity extends AppCompatActivity {
      * on whether there are any objects left to review
      */
     void renderView() {
-        progressText.setText(itemCount + "/" + itemTotal);
+        double progress = (itemTotal > 0) ? ((double) itemCount / itemTotal) * 100 : 0;
+        Log.d("Item Count", "" + itemCount);
+        Log.d("Item Total", "" + itemTotal);
+        Log.d("Progress", "" + progress);
+        progressBar.setProgress((int) progress);
         if ( objects.isEmpty() ) {
             cardView.setVisibility(View.GONE);
             nextButton.setVisibility(View.GONE);
             reportView.setVisibility(View.VISIBLE);
+
             reportText.setText(String.format("Yay! You reviewed %d moments today.", itemTotal));
         } else {
             Moment item = objects.remove(0);
@@ -217,7 +218,6 @@ public class ReviewActivity extends AppCompatActivity {
         @Override
         public void onDataChange(DataSnapshot dataSnapshot) {
             objects = new ArrayList<Moment>();
-            Log.d("Count", ""+dataSnapshot.getChildrenCount());
             for(DataSnapshot mydata : dataSnapshot.getChildren()){
                 Moment m = mydata.getValue(Moment.class);
                 m.setKey(mydata.getKey());
