@@ -14,7 +14,6 @@ import android.widget.Toast;
 
 import java.util.Calendar;
 
-import static xyz.nlaz.albus.R.id.toggleButton;
 
 /**
  * Created by Nick on 11/25/2016.
@@ -26,7 +25,7 @@ public class SettingsActivity extends AppCompatActivity{
         super.onCreate(savedInstanceState);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         setContentView(R.layout.settings_activity_layout);
-        Switch toggle = (Switch)findViewById(toggleButton);
+        Switch toggle = (Switch)findViewById(R.id.notifToggle);
         SharedPreferences prefers = this.getSharedPreferences("settings", Context.MODE_PRIVATE);
         boolean toggleState = prefers.getBoolean("toggleButtonState", true);
         toggle.setChecked(toggleState);
