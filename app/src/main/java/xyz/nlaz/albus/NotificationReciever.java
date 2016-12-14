@@ -23,7 +23,7 @@ public class NotificationReciever extends BroadcastReceiver {
 
         NotificationCompat.Builder builder = new NotificationCompat.Builder(context)
                 .setContentIntent(pendingIntent)
-                .setSmallIcon(android.R.drawable.arrow_up_float)
+                .setSmallIcon(android.R.mipmap.sym_def_app_icon)
                 .setContentTitle("Albus")
                 .setContentText("Have you checked your memories today?")
                 .setAutoCancel(true);
