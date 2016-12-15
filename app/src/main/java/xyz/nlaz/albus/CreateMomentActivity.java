@@ -1,6 +1,5 @@
 package xyz.nlaz.albus;
 
-import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
@@ -15,10 +14,9 @@ import android.widget.Toast;
 import com.firebase.client.Firebase;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
 
 import models.Moment;
-
-import static xyz.nlaz.albus.MomentsActivity.REQUEST_CODE_NEW;
 
 /**
  * CreateMomentActivity - Controls the logic for new moments.
@@ -34,8 +32,7 @@ public class CreateMomentActivity extends AppCompatActivity {
     private boolean isEditView = false;
     private Moment moment;
     private FirebaseAuth mAuth;
-    private Firebase mRef;
-    private DatabaseReference mDatabase;
+    private DatabaseReference mRef;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -48,7 +45,8 @@ public class CreateMomentActivity extends AppCompatActivity {
         moment = new Moment();
         mAuth = FirebaseAuth.getInstance();
 
-        mRef = new Firebase("https://albus-22d13.firebaseio.com/Users/");
+        final String user_id = mAuth.getCurrentUser().getUid();
+        mRef = FirebaseDatabase.getInstance().getReference("Users").child(user_id).child("Moments");
 
         titleInput = (EditText) findViewById(R.id.title);
         descriptionInput = (EditText) findViewById(R.id.description);
@@ -57,7 +55,6 @@ public class CreateMomentActivity extends AppCompatActivity {
         if (bundle != null){
             isEditView = true;
             moment = bundle.getParcelable("moment");
-            Toast.makeText(this, moment.getKey(), Toast.LENGTH_SHORT).show();
             titleInput.setText(moment.getTitle());
             descriptionInput.setText(moment.getDescription());
         }
@@ -78,24 +75,41 @@ public class CreateMomentActivity extends AppCompatActivity {
     public boolean onOptionsItemSelected(MenuItem item) {
         switch(item.getItemId()) {
             case R.id.delete_item:
-                Intent i = new Intent();
-                i.putExtra("moment", moment);
-                setResult(MomentsActivity.RESULT_CODE_DELETE, i);
+                deleteMoment(moment);
                 finish();
                 break;
             case R.id.settings:
                 Toast.makeText(this, "Settings selected", Toast.LENGTH_SHORT).show();
                 Intent settingsIntent = new Intent(this, SettingsActivity.class);
-                startActivityForResult(settingsIntent, REQUEST_CODE_NEW);
+                startActivity(settingsIntent);
                 break;
             case R.id.logout:
-                mAuth.signOut();
                 Toast.makeText(this, "Logged Out", Toast.LENGTH_SHORT).show();
-                Intent logout = new Intent(this, SplashActivity.class);
-                startActivityForResult(logout, REQUEST_CODE_NEW);
+                mAuth.signOut();
                 break;
         }
         return true;
+    }
+
+    /* Firebase Helpers */
+    private void updateMoment(Moment m){
+        mRef.child(m.getKey()).setValue(m);
+
+        Toast.makeText(this, "Update Item: " + m.getTitle(), Toast.LENGTH_SHORT).show();
+    }
+
+    private void createMoment(Moment m) {
+        String key = mRef.push().getKey();
+        m.setKey(key);
+        mRef.child(key).setValue(m);
+
+        Toast.makeText(this, "New Item: " + m.getTitle(), Toast.LENGTH_SHORT).show();
+    }
+
+    private void deleteMoment(Moment m) {
+        mRef.child(m.getKey()).removeValue();
+
+        Toast.makeText(this, "Delete Item: " + m.getTitle(), Toast.LENGTH_SHORT).show();
     }
 
     /* Click Listener */
@@ -107,13 +121,14 @@ public class CreateMomentActivity extends AppCompatActivity {
                 Toast.makeText(v.getContext(), "You must enter a title", Toast.LENGTH_SHORT).show();
                 return;
             } else {
-                Intent i = new Intent(CreateMomentActivity.this, ReviewActivity.class);
-                int resultCode = isEditView ? MomentsActivity.RESULT_CODE_UPDATE : Activity.RESULT_OK;
                 moment.setTitle( titleInput.getText().toString() );
                 moment.setDescription( descriptionInput.getText().toString() );
 
-                i.putExtra("moment", moment);
-                setResult(resultCode, i);
+                if (isEditView) {
+                    updateMoment(moment);
+                } else {
+                    createMoment(moment);
+                }
                 finish();
             }
         }

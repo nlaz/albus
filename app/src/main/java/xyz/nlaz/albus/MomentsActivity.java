@@ -1,6 +1,5 @@
 package xyz.nlaz.albus;
 
-import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
@@ -46,11 +45,6 @@ public class MomentsActivity extends AppCompatActivity {
     private FirebaseAuth mAuth;
     private DatabaseReference mRef;
 
-    public static final int REQUEST_CODE_EDIT = 1;
-    public static final int REQUEST_CODE_NEW = 2;
-    public static final int RESULT_CODE_DELETE = 3;
-    public static final int RESULT_CODE_UPDATE = 4;
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -83,7 +77,7 @@ public class MomentsActivity extends AppCompatActivity {
             case R.id.add_button:
                 Toast.makeText(this, "Add selected", Toast.LENGTH_SHORT).show();
                 Intent addIntent = new Intent(this, CreateMomentActivity.class);
-                startActivityForResult(addIntent, REQUEST_CODE_NEW);
+                startActivity(addIntent);
                 break;
             case android.R.id.home:
                 Toast.makeText(this, "Review selected", Toast.LENGTH_SHORT).show();
@@ -92,52 +86,16 @@ public class MomentsActivity extends AppCompatActivity {
             case R.id.settings:
                 Toast.makeText(this, "Settings selected", Toast.LENGTH_SHORT).show();
                 Intent settingsIntent = new Intent(this, SettingsActivity.class);
-                startActivityForResult(settingsIntent, REQUEST_CODE_NEW);
+                startActivity(settingsIntent);
                 break;
             case R.id.logout:
                 mAuth.signOut();
                 Toast.makeText(this, "Logged Out", Toast.LENGTH_SHORT).show();
                 Intent logout = new Intent(this, LoginActivity.class);
-                startActivityForResult(logout, REQUEST_CODE_NEW);
+                startActivity(logout);
                 break;
         }
         return true;
-    }
-
-    @Override
-    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-        super.onActivityResult(requestCode, resultCode, data);
-        switch (requestCode) {
-            case REQUEST_CODE_NEW:
-                if (resultCode == Activity.RESULT_OK) {
-                    // New Moment Created
-                    Moment moment = data.getParcelableExtra("moment");
-                    String key = mRef.push().getKey();
-                    moment.setKey(key);
-                    mRef.child(key).setValue(moment);
-
-                    Toast.makeText(this, "New Item: " + moment.getKey(), Toast.LENGTH_SHORT).show();
-                }
-                break;
-            case REQUEST_CODE_EDIT:
-                if (resultCode == RESULT_CODE_UPDATE) {
-                    // Existing Moment Edited
-                    Moment moment = data.getParcelableExtra("moment");
-                    mRef.child(moment.getKey()).setValue(moment);
-
-                    Toast.makeText(this, "Update Item", Toast.LENGTH_SHORT).show();
-                } else if (resultCode == RESULT_CODE_DELETE) {
-                    // Existing Moment Deleted
-                    Moment moment = data.getParcelableExtra("moment");
-                    mRef.child(moment.getKey()).removeValue();
-
-                    Toast.makeText(this, "Delete Item: " + moment.getKey(), Toast.LENGTH_SHORT).show();
-                }
-                break;
-            default:
-                Toast.makeText(this, "I'm not sure what to do :(", Toast.LENGTH_SHORT).show();
-                break;
-        }
     }
 
     /* Array Adapter */
@@ -174,7 +132,7 @@ public class MomentsActivity extends AppCompatActivity {
            public boolean onLongClick(View v) {
                Intent intent = new Intent(MomentsActivity.this, CreateMomentActivity.class);
                intent.putExtra("moment", objects.get(position));
-               startActivityForResult(intent, REQUEST_CODE_EDIT);
+               startActivity(intent);
                return false;
            }
        };

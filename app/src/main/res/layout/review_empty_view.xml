@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:padding="32dp"
+    android:background="@color/colorLightGray">
+
+
+   <LinearLayout
+       android:orientation="vertical"
+       android:background="@drawable/white_field"
+       android:padding="20dp"
+       android:translationY="-30dp"
+       android:layout_centerInParent="true"
+       android:layout_width="match_parent"
+       android:layout_height="wrap_content">
+
+      <TextView
+          android:text="Hello There!"
+          android:textAlignment="center"
+          android:textSize="18sp"
+          android:textColor="@color/colorPrimaryBlue"
+          android:layout_marginBottom="20dp"
+          android:layout_width="match_parent"
+          android:layout_height="wrap_content" />
+
+      <TextView
+          android:text="Looks like you are missing some moments. Get started by creating something to remember.  "
+          android:textAlignment="center"
+          android:textSize="16sp"
+          android:textColor="@color/colorDarkGray"
+          android:layout_width="match_parent"
+          android:layout_height="wrap_content" />
+
+      <Button
+          android:id="@+id/create_moment_button"
+          android:layout_width="match_parent"
+          android:layout_height="wrap_content"
+          android:text="Create a moment"
+          android:padding="10dp"
+          android:layout_marginTop="20dp"
+          android:textColor="@android:color/white"
+          android:background="@drawable/blue_button"/>
+
+   </LinearLayout>
+
+</RelativeLayout>

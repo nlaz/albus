@@ -33,8 +33,6 @@ import java.util.List;
 
 import models.Moment;
 
-import static xyz.nlaz.albus.MomentsActivity.REQUEST_CODE_NEW;
-
 /**
  * ReviewActivity - Controls the logic for the Review
  * screen which is launched on app start. This activity pulls
@@ -52,6 +50,9 @@ public class ReviewActivity extends AppCompatActivity {
     private LinearLayout reportView;
     private TextView reportText;
     private ProgressBar progressBar;
+    private Button emptyViewButton;
+    private RelativeLayout activityLayout;
+    private RelativeLayout emptyViewLayout;
 
     private int itemTotal;
     private int itemCount;
@@ -68,6 +69,11 @@ public class ReviewActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.review_activity);
         mAuth = FirebaseAuth.getInstance();
+
+        activityLayout = (RelativeLayout) findViewById(R.id.review_layout);
+        emptyViewLayout = (RelativeLayout) findViewById(R.id.emptyView);
+        emptyViewButton = (Button) findViewById(R.id.create_moment_button);
+
         titleView = (TextView) findViewById(R.id.item_title);
         notesView = (TextView) findViewById(R.id.item_notes);
         nextButton = (Button) findViewById(R.id.next_button);
@@ -94,8 +100,14 @@ public class ReviewActivity extends AppCompatActivity {
 
         nextButton.setOnClickListener(nextListener);
         cardView.setOnClickListener(cardListener);
+        emptyViewButton.setOnClickListener(emptyViewListener);
 
-        resetView();
+        if (objects.size() > 0) {
+            showEmptyLayout(false);
+            resetView();
+        } else {
+            showEmptyLayout(true);
+        }
     }
 
     protected void resetView() {
@@ -112,9 +124,6 @@ public class ReviewActivity extends AppCompatActivity {
      */
     void renderView() {
         double progress = (itemTotal > 0) ? ((double) itemCount / itemTotal) * 100 : 0;
-        Log.d("Item Count", "" + itemCount);
-        Log.d("Item Total", "" + itemTotal);
-        Log.d("Progress", "" + progress);
         progressBar.setProgress((int) progress);
         if ( objects.isEmpty() ) {
             cardView.setVisibility(View.GONE);
@@ -181,10 +190,20 @@ public class ReviewActivity extends AppCompatActivity {
                 mAuth.signOut();
                 Toast.makeText(this, "Logged Out", Toast.LENGTH_SHORT).show();
                 Intent logout = new Intent(this, SplashActivity.class);
-                startActivityForResult(logout, REQUEST_CODE_NEW);
+                startActivity(logout);
                 break;
         }
         return true;
+    }
+
+    void showEmptyLayout(boolean visible) {
+        if (visible) {
+            emptyViewLayout.setVisibility(View.VISIBLE);
+            activityLayout.setVisibility(View.GONE);
+        } else {
+            emptyViewLayout.setVisibility(View.GONE);
+            activityLayout.setVisibility(View.VISIBLE);
+        }
     }
 
     void toggleView(View v) {
@@ -213,6 +232,14 @@ public class ReviewActivity extends AppCompatActivity {
         }
     };
 
+    private View.OnClickListener emptyViewListener = new View.OnClickListener() {
+        @Override
+        public void onClick(View v) {
+            Intent i = new Intent(ReviewActivity.this, CreateMomentActivity.class);
+            startActivity(i);
+        }
+    };
+
     /* Firebase Listeners */
     private ValueEventListener firebaseListener = new ValueEventListener() {
         @Override
@@ -223,7 +250,12 @@ public class ReviewActivity extends AppCompatActivity {
                 m.setKey(mydata.getKey());
                 objects.add(m);
             }
-            resetView();
+            if (objects.size() > 0) {
+                showEmptyLayout(false);
+                resetView();
+            } else {
+                showEmptyLayout(true);
+            }
         }
 
         @Override
