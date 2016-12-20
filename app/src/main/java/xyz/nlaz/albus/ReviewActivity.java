@@ -153,7 +153,7 @@ public class ReviewActivity extends AppCompatActivity {
         editor.apply();
     }
 
-    List<Moment> generateDailyStack( ArrayList<Moment> allMoments) {
+    List<Moment> generateDailyStack( List<Moment> allMoments) {
         Collections.sort(allMoments, momentComparator);
         saveTodayDate();
         return allMoments.subList(0, Math.min(allMoments.size(), REVIEW_LIMIT));
@@ -244,12 +244,14 @@ public class ReviewActivity extends AppCompatActivity {
     private ValueEventListener firebaseListener = new ValueEventListener() {
         @Override
         public void onDataChange(DataSnapshot dataSnapshot) {
-            objects = new ArrayList<Moment>();
-            for(DataSnapshot mydata : dataSnapshot.getChildren()){
-                Moment m = mydata.getValue(Moment.class);
-                m.setKey(mydata.getKey());
-                objects.add(m);
+            List<Moment> data = new ArrayList<Moment>();
+            for(DataSnapshot obj : dataSnapshot.getChildren()){
+                Moment m = obj.getValue(Moment.class);
+                m.setKey(obj.getKey());
+                data.add(m);
             }
+
+            objects = generateDailyStack(data);
             if (objects.size() > 0) {
                 showEmptyLayout(false);
                 resetView();
