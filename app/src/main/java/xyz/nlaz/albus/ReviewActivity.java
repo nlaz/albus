@@ -56,7 +56,7 @@ public class ReviewActivity extends AppCompatActivity {
 
     private int itemTotal;
     private int itemCount;
-    private static int REVIEW_LIMIT = 5;
+    private static int REVIEW_LIMIT = 10;
     private static boolean DEBUG = true;
 
     //to read the moments from firebase copy this code
