@@ -75,16 +75,16 @@ public class MomentsActivity extends AppCompatActivity {
     public boolean onOptionsItemSelected(MenuItem item) {
         switch(item.getItemId()) {
             case R.id.add_button:
-                Toast.makeText(this, "Add selected", Toast.LENGTH_SHORT).show();
+//                Toast.makeText(this, "Add selected", Toast.LENGTH_SHORT).show();
                 Intent addIntent = new Intent(this, CreateMomentActivity.class);
                 startActivity(addIntent);
                 break;
             case android.R.id.home:
-                Toast.makeText(this, "Review selected", Toast.LENGTH_SHORT).show();
+//                Toast.makeText(this, "Review selected", Toast.LENGTH_SHORT).show();
                 finish();
                 break;
             case R.id.settings:
-                Toast.makeText(this, "Settings selected", Toast.LENGTH_SHORT).show();
+//                Toast.makeText(this, "Settings selected", Toast.LENGTH_SHORT).show();
                 Intent settingsIntent = new Intent(this, SettingsActivity.class);
                 startActivity(settingsIntent);
                 break;

@@ -23,7 +23,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="40dp"
-            android:text="Supercharge your memory. Daily review your life in moments."
+            android:text="Supercharge your memory. Learn more effectively through daily review."
             android:textColor="@android:color/white"
             android:textAlignment="center"
             android:textSize="20sp"/>

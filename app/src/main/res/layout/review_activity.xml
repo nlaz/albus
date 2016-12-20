@@ -48,7 +48,6 @@
                         android:layout_height="wrap_content"
                         android:textAlignment="center"
                         android:textColor="@android:color/black"
-                        android:text="Placeholder"
                         android:textSize="24sp"
                         android:layout_centerInParent="true"/>
 
@@ -62,8 +61,7 @@
                         android:layout_marginLeft="30dp"
                         android:layout_marginRight="30dp"
                         android:textAlignment="center"
-                        android:textSize="18sp"
-                        android:text="Taxidermy vice activated charcoal authentic beard craft beer. Cardigan af meh iceland biodiesel"/>
+                        android:textSize="18sp"/>
                 </LinearLayout>
 
             </RelativeLayout>
@@ -136,7 +134,7 @@
                 android:layout_height="wrap_content" />
 
             <TextView
-                android:text="Looks like you are missing some moments. Get started by creating something to remember.  "
+                android:text="Looks like you are missing some notes. Get started by creating something to remember.  "
                 android:textAlignment="center"
                 android:textSize="16sp"
                 android:textColor="@color/colorDarkGray"
@@ -147,7 +145,7 @@
                 android:id="@+id/create_moment_button"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="Create a moment"
+                android:text="Create notes"
                 android:padding="10dp"
                 android:layout_marginTop="20dp"
                 android:textColor="@android:color/white"

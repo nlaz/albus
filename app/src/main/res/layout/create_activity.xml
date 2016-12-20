@@ -24,12 +24,12 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_margin="10dp"
-            android:hint="Create moment..."/>
+            android:hint="Create note title..."/>
         
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="NOTES"
+            android:text="DESCRIPTION"
             android:textColor="@color/colorPrimaryBlue"
             android:textStyle="bold"/>
 
@@ -38,7 +38,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_margin="10dp"
-            android:hint="Add some notes to jog your memory..."/>
+            android:hint="Add more detail to jog your memory..."/>
 
     </LinearLayout>
 

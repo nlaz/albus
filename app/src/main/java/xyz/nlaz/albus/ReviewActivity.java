@@ -130,12 +130,12 @@ public class ReviewActivity extends AppCompatActivity {
             nextButton.setVisibility(View.GONE);
             reportView.setVisibility(View.VISIBLE);
 
-            reportText.setText(String.format("Yay! You reviewed %d moments today.", itemTotal));
+            reportText.setText(String.format("Yay! You reviewed %d notes today.", itemTotal));
         } else {
             Moment item = objects.remove(0);
             titleView.setText(item.getTitle());
             if (item.getDescription().isEmpty()) {
-                notesView.setText("Oops! There's nothing here...");
+                notesView.setText("Oops there's nothing here yet. Edit item to add description.");
             } else {
                 notesView.setText(item.getDescription());
             }
@@ -177,12 +177,12 @@ public class ReviewActivity extends AppCompatActivity {
     public boolean onOptionsItemSelected(MenuItem item) {
         switch(item.getItemId()) {
             case R.id.list_button:
-                Toast.makeText(this, "Moments list selected", Toast.LENGTH_SHORT).show();
+                //Toast.makeText(this, "Moments list selected", Toast.LENGTH_SHORT).show();
                 Intent addIntent = new Intent(this, MomentsActivity.class);
                 startActivity(addIntent);
                 break;
             case R.id.settings:
-                Toast.makeText(this, "Settings selected", Toast.LENGTH_SHORT).show();
+                //Toast.makeText(this, "Settings selected", Toast.LENGTH_SHORT).show();
                 Intent settingsIntent = new Intent(this, SettingsActivity.class);
                 startActivity(settingsIntent);
                 break;

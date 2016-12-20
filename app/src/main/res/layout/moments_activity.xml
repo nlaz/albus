@@ -20,6 +20,6 @@
         android:layout_height="wrap_content"
         android:layout_centerInParent="true"
         android:textSize="18sp"
-        android:text="No moments made"/>
+        android:text="No notes yet."/>
 
 </RelativeLayout>
